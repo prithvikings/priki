@@ -13,6 +13,7 @@ import {
 } from "@/components";
 import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
+import { useMemories } from "@/features/memories/MemoriesProvider";
 import { colors, radius, shadows, spacing } from "@/theme";
 
 const moodColors: Record<MoodTone, string> = {
@@ -85,6 +86,8 @@ function ActionTile({
 export default function HomeScreen() {
   const router = useRouter();
   const { currentEntry } = useDailyUs();
+  const { memories } = useMemories();
+  const latestMemory = [...memories].sort((a, b) => b.memoryDate.localeCompare(a.memoryDate) || b.createdAt.localeCompare(a.createdAt))[0];
   const [sentAffections, setSentAffections] = useState<AffectionKind[]>([]);
   const [hugCount, setHugCount] = useState(0);
   const [memoryImageFailed, setMemoryImageFailed] = useState(false);
@@ -173,12 +176,12 @@ export default function HomeScreen() {
         <View style={styles.memoryHeader}>
           <SectionHeader title="Recent Memory" actionLabel="View all" onActionPress={() => navigateTo("/(tabs)/memories")} />
         </View>
-        <Pressable onPress={() => navigateTo("/(tabs)/memories")} style={({ pressed }) => [styles.memoryContent, pressed && styles.pressed]}>
+        <Pressable onPress={() => latestMemory ? router.push({ pathname: "/(tabs)/memories/[id]", params: { id: latestMemory.id } }) : navigateTo("/(tabs)/memories")} style={({ pressed }) => [styles.memoryContent, pressed && styles.pressed]}>
           {memoryImageFailed ? (
             <View style={[styles.memoryImage, styles.memoryFallback]}><Ionicons name="image-outline" size={30} color={colors.accent} /></View>
           ) : (
             <Image
-              source={{ uri: homeMockData.recentMemory.imageUri ?? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" }}
+              source={{ uri: latestMemory?.imageRef ? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" : "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" }}
               style={styles.memoryImage}
               resizeMode="cover"
               onError={() => setMemoryImageFailed(true)}
@@ -186,9 +189,9 @@ export default function HomeScreen() {
             />
           )}
           <View style={styles.memoryCopy}>
-            <PrikiText variant="title">{homeMockData.recentMemory.title}</PrikiText>
-            <PrikiText variant="caption" style={styles.memoryCaption}>{homeMockData.recentMemory.caption}</PrikiText>
-            <PrikiText variant="caption" style={styles.memoryDate}>{formatDate(homeMockData.recentMemory.date)}</PrikiText>
+            <PrikiText variant="title">{latestMemory?.title ?? "Your first memory"}</PrikiText>
+            <PrikiText variant="caption" style={styles.memoryCaption}>{latestMemory?.description || "A little moment, waiting to be remembered."}</PrikiText>
+            <PrikiText variant="caption" style={styles.memoryDate}>{latestMemory ? formatDate(latestMemory.memoryDate) : "Add a memory together"}</PrikiText>
           </View>
         </Pressable>
       </SurfaceCard>
