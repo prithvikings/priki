@@ -85,15 +85,7 @@ export default function HomeScreen() {
 
 
 
-  const openOurDates = () => {
-    console.log("[Priki][Home] Until We Meet pressed; pushing /(tabs)/dates");
-    try {
-      router.push("/(tabs)/dates");
-      console.log("[Priki][Home] router.push call completed");
-    } catch (error) {
-      console.error("[Priki][Home] Failed to push Our Dates route", error);
-    }
-  };
+  const openOurDates = () => router.push("/(tabs)/dates");
 
   const navigateTo = (route: "/(tabs)/notes" | "/(tabs)/daily-us" | "/(tabs)/memories" | "/(tabs)/affection") => {
     router.navigate(route);
