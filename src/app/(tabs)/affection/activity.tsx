@@ -1,0 +1,7 @@
+import { StyleSheet, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { AppHeader, PrikiText, ScreenContainer } from "@/components";
+import { useAffection } from "@/features/affection/AffectionProvider";
+import { colors, spacing } from "@/theme";
+export default function AffectionActivityScreen(){const {activities}=useAffection();const sorted=[...activities].sort((a,b)=>b.createdAt.localeCompare(a.createdAt));return <ScreenContainer contentStyle={styles.content}><AppHeader title="Affection activity" eyebrow="LITTLE MOMENTS, RECENTLY"/>{sorted.map(item=><View key={item.id} style={styles.row}><View style={styles.icon}><Ionicons name={item.type==="hug"?"heart-circle-outline":"heart-outline"} size={21} color={colors.accent}/></View><View style={{flex:1}}><PrikiText variant="title" style={styles.title}>{item.sender.name} sent a virtual {item.type}</PrikiText><PrikiText variant="caption" style={styles.sub}>{new Date(item.createdAt).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"})} · {item.status==="read"?"Seen":"Received"}</PrikiText></View></View>)}</ScreenContainer>}
+const styles=StyleSheet.create({content:{paddingTop:spacing.md,paddingBottom:130,gap:spacing.md},row:{flexDirection:"row",alignItems:"center",gap:spacing.md,paddingVertical:spacing.md,borderBottomWidth:1,borderBottomColor:colors.border},icon:{width:44,height:44,borderRadius:22,backgroundColor:colors.surfaceMuted,alignItems:"center",justifyContent:"center"},title:{fontSize:14},sub:{color:colors.textSecondary,marginTop:4}});
