@@ -28,6 +28,7 @@ export default function NoteDetailScreen() {
         <PrikiText variant="display" style={styles.introTitle}>{received?"Someone thought of you.":"A note from you."}</PrikiText>
         <PrikiText variant="caption">{received?"A little piece of them, delivered to you.":`For ${note.recipientName}`}</PrikiText>
       </View>
+      {note.status === "delivered" ? <Pressable accessibilityRole="button" onPress={() => markOpened(note.id)}><PrikiText variant="caption" style={styles.openState}>Mark this letter as opened</PrikiText></Pressable> : null}
       <NoteLetter note={note}/>
       {note.status==="scheduled"&&note.scheduledFor ? <View style={styles.scheduledBox}><Ionicons name="calendar-outline" size={18} color={colors.accent}/><PrikiText variant="caption" style={styles.scheduledText}>Scheduled for {formatSchedule(note.scheduledFor)}</PrikiText></View>:null}
       {note.updatedAt?<PrikiText variant="caption" style={styles.edited}>Edited · {formatNoteDate(note.updatedAt)}</PrikiText>:null}
