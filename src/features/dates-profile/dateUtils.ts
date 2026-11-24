@@ -51,7 +51,7 @@ export function getAutomaticMilestones(startDate:string, now:Date, timeZone:stri
   const items:{id:string;title:string;date:string;description:string;status:"upcoming"|"completed"}[]=[];
   const add=(id:string,title:string,date:string,description:string)=>items.push({id,title,date,description,status:date>=today?"upcoming":"completed"});
   add("days-together",`${Math.max(0,elapsed)} days together`,today,"Every day, a little more us.");
-  const [sy,sm,sd]=startDate.split("-").map(Number),[ty,tm]=today.split("-").map(Number);
+  const [sy,sm,sd]=startDate.split("-").map(Number),[ty]=today.split("-").map(Number);
   for(let offset=-12;offset<=12;offset++){
     const total=sm-1+offset,year=sy+Math.floor(total/12),month=((total%12)+12)%12+1;
     if(year<sy || (year===sy&&month<sm)) continue;
