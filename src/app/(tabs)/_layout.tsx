@@ -1,4 +1,5 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname, useSegments } from "expo-router";
+import { useEffect } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { TabIcon, type TabIconName } from "@/components/TabIcon";
 import { colors, radius, spacing, typography } from "@/theme";
@@ -12,6 +13,12 @@ const tabs: { name: string; title: string; icon: TabIconName }[] = [
 ];
 
 export default function TabsLayout() {
+  const pathname = usePathname();
+  const segments = useSegments();
+  useEffect(() => {
+    console.log("[Priki][Tabs] Active route changed", { pathname, segments });
+  }, [pathname, segments]);
+  console.log("[Priki][Tabs] Layout rendered", { pathname, segments });
   return (
     <Tabs screenOptions={{
       headerShown: false,
