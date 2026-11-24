@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
   memoryImage: { width: 116, height: 116, borderRadius: radius.md, backgroundColor: colors.surfaceMuted },
   memoryCopy: { flex: 1, gap: spacing.xs },
   memoryCaption: { fontSize: 12, lineHeight: 17 },
-  inlineFeedback: { color: colors.accent, marginTop: spacing.xs },
   footer: { textAlign: "center", letterSpacing: 1.1, fontSize: 10, marginTop: spacing.xs },
   memoryDate: { color: colors.accent, fontWeight: "600" },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
