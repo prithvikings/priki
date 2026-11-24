@@ -175,7 +175,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: { paddingTop: spacing.md, paddingBottom: 132, gap: spacing.xl },
+  content: { paddingTop: spacing.md, paddingBottom: spacing["3xl"], gap: spacing.xl },
   greeting: { gap: 0, marginTop: spacing.xs },
   greetingSecond: { color: colors.accent, fontSize: 29 },
   greetingCaption: { marginTop: spacing.sm, fontSize: 14 },
