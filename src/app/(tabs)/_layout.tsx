@@ -44,11 +44,9 @@ export default function TabsLayout() {
 
 const styles = StyleSheet.create({
   bar: {
-    position: "absolute",
-    left: spacing.lg,
-    right: spacing.lg,
-    bottom: Platform.OS === "ios" ? spacing.sm : spacing.md,
-    height: 72,
+    height: 76,
+    marginHorizontal: spacing.lg,
+    marginBottom: Platform.OS === "ios" ? spacing.sm : spacing.md,
     paddingTop: spacing.sm,
     paddingBottom: Platform.OS === "ios" ? spacing.xs : spacing.sm,
     borderTopWidth: 0,
