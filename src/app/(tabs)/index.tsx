@@ -220,5 +220,7 @@ const styles = StyleSheet.create({
   memoryCaption: { fontSize: 12, lineHeight: 17 },
   footer: { textAlign: "center", letterSpacing: 1.1, fontSize: 10, marginTop: spacing.xs },
   memoryDate: { color: colors.accent, fontWeight: "600" },
+  nextDatePreview: { flexDirection: "row", alignItems: "center", gap: spacing.sm, paddingHorizontal: spacing.sm },
+  nextDateText: { color: colors.accent, fontWeight: "600" },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
 });
