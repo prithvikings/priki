@@ -1,6 +1,6 @@
 import { mockCouple } from "@/data/mockData";
 import { getDailyQuestion, shiftDateKey } from "./dailyQuestion";
-import type { DailyQuestionEntry } from "./types";
+import type { DailyQuestionEntry, DailyReaction } from "./types";
 
 export function createMockHistory(todayKey: string): Record<string, DailyQuestionEntry> {
   const entries: Record<string, DailyQuestionEntry> = {};
@@ -25,6 +25,9 @@ export function createMockHistory(todayKey: string): Record<string, DailyQuestio
 
   examples.forEach((answers, index) => {
     const dateKey = shiftDateKey(todayKey, -(index + 1));
+    const reactions: DailyReaction[] = [];
+    if (index % 2 === 0) reactions.push({ id: `history-${dateKey}-you-heart`, fromPartnerId: "you", toPartnerId: "partner", kind: "heart", createdAt: new Date(`${dateKey}T14:00:00.000Z`).toISOString() });
+    if (index % 2 === 1) reactions.push({ id: `history-${dateKey}-partner-heart`, fromPartnerId: "partner", toPartnerId: "you", kind: "heart", createdAt: new Date(`${dateKey}T14:10:00.000Z`).toISOString() });
     entries[dateKey] = {
       dateKey,
       question: getDailyQuestion(dateKey),
@@ -40,8 +43,7 @@ export function createMockHistory(todayKey: string): Record<string, DailyQuestio
         text: answers.partner,
         submittedAt: new Date(`${dateKey}T13:00:00.000Z`).toISOString(),
       },
-      currentUserReactedToPartner: index % 2 === 0,
-      partnerReactedToCurrentUser: index % 2 === 1,
+      reactions,
       skipped: false,
     };
   });
@@ -52,8 +54,7 @@ export function createMockHistory(todayKey: string): Record<string, DailyQuestio
     question: getDailyQuestion(skippedDate),
     currentUserAnswer: null,
     partnerAnswer: null,
-    currentUserReactedToPartner: false,
-    partnerReactedToCurrentUser: false,
+    reactions: [],
     skipped: true,
   };
 
