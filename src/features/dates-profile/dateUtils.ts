@@ -1,6 +1,6 @@
 const DAY_MS = 86_400_000;
 export function isValidDateKey(value: string) {
-  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return false;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const [y,m,d] = value.split("-").map(Number);
   const date = new Date(Date.UTC(y,m-1,d,12));
   return date.getUTCFullYear()===y && date.getUTCMonth()===m-1 && date.getUTCDate()===d && y>=1900;
@@ -30,7 +30,7 @@ export function formatDateTimeInZone(iso: string, timeZone: string) {
   return new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit",timeZone}).format(date);
 }
 export function localDateTimeToIso(dateKey:string,time:string,timeZone:string):string|null {
-  if(!isValidDateKey(dateKey)||!/^([01]\\d|2[0-3]):[0-5]\\d$/.test(time)) return null;
+  if(!isValidDateKey(dateKey)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return null;
   const [y,m,d]=dateKey.split("-").map(Number),[hh,mm]=time.split(":").map(Number);
   const target=Date.UTC(y,m-1,d,hh,mm); let guess=target;
   try {
