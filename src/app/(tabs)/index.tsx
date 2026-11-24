@@ -85,6 +85,16 @@ export default function HomeScreen() {
 
 
 
+  const openOurDates = () => {
+    console.log("[Priki][Home] Until We Meet pressed; pushing /(tabs)/dates");
+    try {
+      router.push("/(tabs)/dates");
+      console.log("[Priki][Home] router.push call completed");
+    } catch (error) {
+      console.error("[Priki][Home] Failed to push Our Dates route", error);
+    }
+  };
+
   const navigateTo = (route: "/(tabs)/notes" | "/(tabs)/daily-us" | "/(tabs)/memories" | "/(tabs)/affection") => {
     router.navigate(route);
   };
@@ -109,7 +119,7 @@ export default function HomeScreen() {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Open Our Dates and meeting countdown"
-        onPress={() => router.push("/(tabs)/dates")}
+        onPress={openOurDates}
         style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
       >
         <View style={styles.countdownCopy}>
@@ -125,7 +135,7 @@ export default function HomeScreen() {
           </View>
         </View>
       </Pressable>
-      {nextDate ? <Pressable onPress={() => router.push("/(tabs)/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
+      {nextDate ? <Pressable onPress={openOurDates} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
         <View style={styles.sectionEyebrow}>
