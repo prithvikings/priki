@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Alert, Image, Pressable, StyleSheet, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import {
@@ -14,6 +14,7 @@ import {
 import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { useMemories } from "@/features/memories/MemoriesProvider";
+import { MemoryArtwork } from "@/features/memories/components/MemoryArtwork";
 import { colors, radius, shadows, spacing } from "@/theme";
 
 const moodColors: Record<MoodTone, string> = {
@@ -90,7 +91,6 @@ export default function HomeScreen() {
   const latestMemory = [...memories].sort((a, b) => b.memoryDate.localeCompare(a.memoryDate) || b.createdAt.localeCompare(a.createdAt))[0];
   const [sentAffections, setSentAffections] = useState<AffectionKind[]>([]);
   const [hugCount, setHugCount] = useState(0);
-  const [memoryImageFailed, setMemoryImageFailed] = useState(false);
   const days = useMemo(() => daysUntil(homeMockData.meeting.date), []);
 
   const sendAffection = (kind: AffectionKind) => {
@@ -177,17 +177,7 @@ export default function HomeScreen() {
           <SectionHeader title="Recent Memory" actionLabel="View all" onActionPress={() => navigateTo("/(tabs)/memories")} />
         </View>
         <Pressable onPress={() => latestMemory ? router.push({ pathname: "/(tabs)/memories/[id]", params: { id: latestMemory.id } }) : navigateTo("/(tabs)/memories")} style={({ pressed }) => [styles.memoryContent, pressed && styles.pressed]}>
-          {memoryImageFailed ? (
-            <View style={[styles.memoryImage, styles.memoryFallback]}><Ionicons name="image-outline" size={30} color={colors.accent} /></View>
-          ) : (
-            <Image
-              source={{ uri: latestMemory?.imageRef ? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" : "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" }}
-              style={styles.memoryImage}
-              resizeMode="cover"
-              onError={() => setMemoryImageFailed(true)}
-              accessibilityLabel="Warm sunset sky over a landscape"
-            />
-          )}
+          <MemoryArtwork imageRef={latestMemory?.imageRef ?? null} style={styles.memoryImage} />
           <View style={styles.memoryCopy}>
             <PrikiText variant="title">{latestMemory?.title ?? "Your first memory"}</PrikiText>
             <PrikiText variant="caption" style={styles.memoryCaption}>{latestMemory?.description || "A little moment, waiting to be remembered."}</PrikiText>
@@ -277,6 +267,5 @@ const styles = StyleSheet.create({
   inlineFeedback: { color: colors.accent, marginTop: spacing.xs },
   footer: { textAlign: "center", letterSpacing: 1.1, fontSize: 10, marginTop: spacing.xs },
   memoryDate: { color: colors.accent, fontWeight: "600" },
-  memoryFallback: { alignItems: "center", justifyContent: "center" },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
 });
