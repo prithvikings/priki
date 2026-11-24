@@ -104,10 +104,6 @@ export default function DailyUsScreen() {
           <PrikiText variant="caption">You both showed up. Here are your two perspectives.</PrikiText>
           <AnswerCard name={mockCouple.currentUser.name} initials={mockCouple.currentUser.initials} answer={currentEntry.currentUserAnswer ?? ""} isCurrentUser partnerReacted={currentEntry.partnerReactedToCurrentUser}/>
           <AnswerCard name={mockCouple.partner.name} initials={mockCouple.partner.initials} answer={currentEntry.partnerAnswer ?? ""} isCurrentUser={false} reacted={currentEntry.currentUserReactedToPartner} onReact={togglePartnerAnswerReaction}/>
-          <Pressable accessibilityRole="button" accessibilityLabel={currentEntry.currentUserReactedToPartner?"Remove heart reaction":"React with a heart"} onPress={togglePartnerAnswerReaction} style={styles.reactionButton}>
-            <Ionicons name={currentEntry.currentUserReactedToPartner?"heart":"heart-outline"} size={20} color={colors.accent}/>
-            <PrikiText variant="button" style={styles.reactionLabel}>{currentEntry.currentUserReactedToPartner?"You sent a heart":"Send a little heart"}</PrikiText>
-          </Pressable>
         </Animated.View>
       ) : null}
 
@@ -155,8 +151,6 @@ const styles=StyleSheet.create({
  skippedCopy:{textAlign:"center"},
  revealSection:{gap:spacing.md},
  revealHeading:{flexDirection:"row",alignItems:"center",gap:spacing.sm},
- reactionButton:{minHeight:48,flexDirection:"row",alignItems:"center",justifyContent:"center",gap:spacing.sm,borderRadius:radius.lg,backgroundColor:"#FCEDEF",borderWidth:1,borderColor:colors.border},
- reactionLabel:{color:colors.accent},
  savedToast:{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:spacing.xs},
  savedToastText:{color:colors.success},
  devPanel:{padding:spacing.md,borderRadius:radius.md,borderWidth:1,borderStyle:"dashed",borderColor:colors.borderStrong,gap:spacing.sm,backgroundColor:colors.surfaceMuted},
