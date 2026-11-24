@@ -13,7 +13,7 @@ import { formatCoupleDate, getDeadlineLabel, SHARED_COUPLE_TIMEZONE } from "@/fe
 
 export default function DailyUsScreen() {
   const router = useRouter();
-  const { currentEntry, submitAnswer, skipToday, revisitToday, togglePartnerAnswerReaction, simulatePartnerSubmission } = useDailyUs();
+  const { now, currentEntry, submitAnswer, skipToday, revisitToday, togglePartnerAnswerReaction, simulatePartnerSubmission } = useDailyUs();
   const [editing, setEditing] = useState(false);
   const [saved, setSaved] = useState(false);
   const [revealOpacity] = useState(() => new Animated.Value(0));
@@ -66,7 +66,7 @@ export default function DailyUsScreen() {
 
       <View style={styles.deadline}>
         <Ionicons name="time-outline" size={16} color={colors.textSecondary} />
-        <PrikiText variant="caption">{getDeadlineLabel()} · Shared couple time · {SHARED_COUPLE_TIMEZONE}</PrikiText>
+        <PrikiText variant="caption">{getDeadlineLabel(now, SHARED_COUPLE_TIMEZONE)} · Shared couple time · {SHARED_COUPLE_TIMEZONE}</PrikiText>
       </View>
 
       {currentEntry.skipped && !currentEntry.currentUserSubmitted ? (
@@ -102,7 +102,7 @@ export default function DailyUsScreen() {
         <Animated.View style={[styles.revealSection,{opacity:revealOpacity,transform:[{translateY:revealOpacity.interpolate({inputRange:[0,1],outputRange:[12,0]})}]}]}>
           <View style={styles.revealTop}>
             <View style={styles.revealHeading}><Ionicons name="heart" size={18} color={colors.accent}/><PrikiText variant="h3">A little more of each other</PrikiText></View>
-            <Pressable accessibilityRole="button" onPress={()=>setEditing(true)}><PrikiText variant="caption" style={styles.editLink}>Edit yours</PrikiText></Pressable>
+            <Pressable accessibilityRole="button" onPress={()=>{setEditing(true);setSaved(false);}}><PrikiText variant="caption" style={styles.editLink}>Edit yours</PrikiText></Pressable>
           </View>
           <PrikiText variant="caption">You both showed up. Here are your two perspectives.</PrikiText>
           {editing ? <View style={styles.editComposer}><AnswerComposer key="revealed-edit" initialValue={currentEntry.currentUserAnswer ?? ""} submitLabel="Save changes" onSubmit={handleSubmit}/><SecondaryButton title="Cancel editing" onPress={()=>setEditing(false)}/></View> : null}
