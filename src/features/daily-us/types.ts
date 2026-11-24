@@ -13,13 +13,26 @@ export type DailyAnswer = {
   submittedAt: string;
 };
 
+export type DailyReaction = {
+  id: string;
+  fromPartnerId: "you" | "partner";
+  toPartnerId: "you" | "partner";
+  kind: "heart";
+  createdAt: string;
+};
+
+export type PartnerSubmissionStatus = {
+  currentUser: "waiting" | "submitted";
+  partner: "waiting" | "submitted";
+  bothSubmitted: boolean;
+};
+
 export type DailyQuestionEntry = {
   dateKey: string;
   question: DailyQuestion;
   currentUserAnswer: DailyAnswer | null;
   partnerAnswer: DailyAnswer | null;
-  currentUserReactedToPartner: boolean;
-  partnerReactedToCurrentUser: boolean;
+  reactions: DailyReaction[];
   skipped: boolean;
 };
 
@@ -31,6 +44,7 @@ export type DailyEntryView = {
   currentUserSubmitted: boolean;
   partnerSubmitted: boolean;
   bothSubmitted: boolean;
+  submissionStatus: PartnerSubmissionStatus;
   currentUserReactedToPartner: boolean;
   partnerReactedToCurrentUser: boolean;
   skipped: boolean;
