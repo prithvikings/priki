@@ -2,11 +2,13 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, spacing } from "@/theme";
 import { Avatar } from "./Avatar";
+import { useRouter } from "expo-router";
 import { PrikiText } from "./PrikiText";
 
 type Props = { title?: string; eyebrow?: string; onProfilePress?: () => void };
 
 export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY DAY.", onProfilePress }: Props) {
+  const router = useRouter();
   return (
     <View style={styles.row}>
       <View style={styles.copy}>
@@ -18,7 +20,7 @@ export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY D
           <Ionicons name="notifications-outline" size={23} color={colors.text} />
           <View style={styles.notificationDot} />
         </View>
-        <Pressable accessibilityRole="button" accessibilityLabel="Open profile and settings" onPress={onProfilePress} hitSlop={8}>
+        <Pressable accessibilityRole="button" accessibilityLabel="Open profile and settings" onPress={onProfilePress ?? (() => router.push("/(tabs)/profile"))} hitSlop={8}>
           <Avatar initials="A" size={42} accessibilityLabel="Your profile" />
         </Pressable>
       </View>
