@@ -12,7 +12,7 @@ export function dateKeyToUtc(value: string) {
 }
 export function formatDateKey(value: string, style: "long"|"short"|"numeric" = "long") {
   const date=dateKeyToUtc(value); if(!date) return "Date unavailable";
-  return new Intl.DateTimeFormat("en-IN",{day:"numeric",month:style==="numeric"?"2-digit":style==="short"?"short":"long",...(style==="long"?{year:"numeric"}:{year:"numeric"}),timeZone:"UTC"}).format(date);
+  return new Intl.DateTimeFormat("en-IN",{day:"numeric",month:style==="numeric"?"2-digit":style==="short"?"short":"long",year:"numeric",timeZone:"UTC"}).format(date);
 }
 export function coupleDateKey(now: Date, timeZone: string) {
   const parts=new Intl.DateTimeFormat("en-CA",{timeZone,year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(now);
