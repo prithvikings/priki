@@ -12,6 +12,7 @@ import {
   SurfaceCard,
 } from "@/components";
 import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
+import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { colors, radius, shadows, spacing } from "@/theme";
 
 const moodColors: Record<MoodTone, string> = {
@@ -83,6 +84,7 @@ function ActionTile({
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { currentEntry } = useDailyUs();
   const [sentAffections, setSentAffections] = useState<AffectionKind[]>([]);
   const [hugCount, setHugCount] = useState(0);
   const [memoryImageFailed, setMemoryImageFailed] = useState(false);
@@ -143,15 +145,15 @@ export default function HomeScreen() {
           <Ionicons name="chatbubble-ellipses-outline" size={19} color={colors.accent} />
           <PrikiText variant="title" style={styles.eyebrowText}>Today's Daily Us</PrikiText>
         </View>
-        <PrikiText variant="h3" style={styles.question}>{homeMockData.dailyQuestion.prompt}</PrikiText>
+        <PrikiText variant="h3" style={styles.question}>{currentEntry.question.text}</PrikiText>
         <View style={styles.answerStatusRow}>
           <View style={styles.answerStatus}>
-            <Ionicons name={homeMockData.dailyQuestion.currentUserAnswered ? "checkmark-circle" : "ellipse-outline"} size={17} color={homeMockData.dailyQuestion.currentUserAnswered ? colors.success : colors.textSecondary} />
-            <PrikiText variant="caption">{homeMockData.dailyQuestion.currentUserAnswered ? "You answered" : "You have not answered"}</PrikiText>
+            <Ionicons name={currentEntry.currentUserSubmitted ? "checkmark-circle" : "ellipse-outline"} size={17} color={currentEntry.currentUserSubmitted ? colors.success : colors.textSecondary} />
+            <PrikiText variant="caption">{currentEntry.currentUserSubmitted ? "You answered" : "You have not answered"}</PrikiText>
           </View>
           <View style={styles.answerStatus}>
             <Ionicons name="time-outline" size={17} color={colors.textSecondary} />
-            <PrikiText variant="caption">{homeMockData.dailyQuestion.partnerAnswered ? "They answered" : "Waiting for them"}</PrikiText>
+            <PrikiText variant="caption">{currentEntry.partnerSubmitted ? "They answered" : "Waiting for them"}</PrikiText>
           </View>
         </View>
         <PrimaryButton title="Open today's question" onPress={() => navigateTo("/(tabs)/daily-us")} style={styles.questionButton} />
