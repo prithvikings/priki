@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Alert, Image, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "@/theme";
 import { PrikiText } from "@/components/PrikiText";
@@ -42,10 +42,10 @@ export function NoteComposer({
   const [body, setBody] = useState(initialBody);
   const [photoUri, setPhotoUri] = useState<string | null>(initialPhotoUri);
   const [showScheduler, setShowScheduler] = useState(Boolean(initialSchedule));
-  const [scheduleValue, setScheduleValue] = useState(initialSchedule ? initialSchedule.slice(0, 16) : localDateTimeValue(new Date(Date.now() + 86_400_000)));
+  const [scheduleValue, setScheduleValue] = useState(initialSchedule ? localDateTimeValue(new Date(initialSchedule)) : localDateTimeValue(new Date(Date.now() + 86_400_000)));
   const [error, setError] = useState("");
 
-  const input = useMemo<NoteDraftInput>(() => ({ title, body, photoUri, scheduledFor: showScheduler ? new Date(scheduleValue).toISOString() : null }), [title, body, photoUri, showScheduler, scheduleValue]);
+  const getInput = (): NoteDraftInput => ({ title, body, photoUri, scheduledFor: null });
 
   const validate = () => {
     if (!body.trim()) {
@@ -55,13 +55,6 @@ export function NoteComposer({
     if (body.length > MAX_LENGTH) {
       setError("Your note is longer than the allowed limit.");
       return false;
-    }
-    if (showScheduler) {
-      const selected = new Date(scheduleValue);
-      if (!isValidFutureDate(selected.toISOString())) {
-        setError("Choose a future date and time.");
-        return false;
-      }
     }
     setError("");
     return true;
@@ -77,7 +70,7 @@ export function NoteComposer({
       setError("Choose a future date and time.");
       return;
     }
-    onSchedule({ ...input, scheduledFor: selected.toISOString() });
+    onSchedule({ ...getInput(), scheduledFor: selected.toISOString() });
   };
 
   return (
@@ -120,13 +113,10 @@ export function NoteComposer({
             <PrikiText variant="title">Schedule this note</PrikiText>
             <Pressable onPress={() => setShowScheduler(false)}><PrikiText variant="caption" style={styles.removeSchedule}>Remove</PrikiText></Pressable>
           </View>
-          <TextInput
-            value={scheduleValue}
-            onChangeText={setScheduleValue}
-            placeholder="YYYY-MM-DDTHH:mm"
-            style={styles.dateInput}
-            autoCapitalize="none"
-          />
+          <View style={styles.dateTimeRow}>
+            <TextInput value={scheduleValue.slice(0,10)} onChangeText={(value) => setScheduleValue(`${value}T${scheduleValue.slice(11,16)}`)} placeholder="YYYY-MM-DD" style={[styles.dateInput, styles.dateField]} autoCapitalize="none" />
+            <TextInput value={scheduleValue.slice(11,16)} onChangeText={(value) => setScheduleValue(`${scheduleValue.slice(0,10)}T${value}`)} placeholder="HH:mm" style={[styles.dateInput, styles.timeField]} autoCapitalize="none" />
+          </View>
           <PrikiText variant="caption">Use your device's local date and time. The selected time must be in the future.</PrikiText>
           {scheduleValue && !Number.isNaN(new Date(scheduleValue).getTime()) ? <PrikiText variant="caption" style={styles.scheduledPreview}>Planned for {formatSchedule(new Date(scheduleValue).toISOString())}</PrikiText> : null}
           <SecondaryButton title="Confirm schedule" onPress={handleSchedule} />
@@ -137,9 +127,9 @@ export function NoteComposer({
       {error ? <PrikiText variant="caption" style={styles.error}>{error}</PrikiText> : null}
       <View style={styles.buttonRow}>
         <SecondaryButton title="Cancel" onPress={onCancel} style={styles.halfButton} />
-        <SecondaryButton title="Save draft" onPress={() => { if (validate()) onSaveDraft(input); }} style={styles.halfButton} />
+        <SecondaryButton title="Save draft" onPress={() => { if (validate()) onSaveDraft(getInput()); }} style={styles.halfButton} />
       </View>
-      <PrimaryButton title={submitLabel} onPress={() => { if (validate()) onSubmit(input); }} />
+      <PrimaryButton title={submitLabel} onPress={() => { if (validate()) onSubmit(getInput()); }} />
     </View>
   );
 }
@@ -160,6 +150,9 @@ const styles = StyleSheet.create({
   scheduler: { padding: spacing.md, gap: spacing.md, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surfaceMuted },
   schedulerHeading: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   removeSchedule: { color: colors.accent },
+  dateTimeRow: { flexDirection: "row", gap: spacing.sm },
+  dateField: { flex: 1 },
+  timeField: { width: 100 },
   dateInput: { minHeight: 48, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, paddingHorizontal: spacing.md, color: colors.text },
   scheduledPreview: { color: colors.accent, fontWeight: "600" },
   error: { color: colors.accent, fontWeight: "600" },
