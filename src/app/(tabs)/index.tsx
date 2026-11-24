@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   AppHeader,
   Avatar,
@@ -106,11 +106,12 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Link href="/dates" asChild>
-        <Pressable
-          accessibilityRole="button"
-          style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
-        >
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Open Our Dates and meeting countdown"
+        onPress={() => router.push("/(tabs)/dates")}
+        style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
+      >
         <View style={styles.countdownCopy}>
           <View style={styles.countdownIcon}><Ionicons name="calendar-outline" size={23} color={colors.accent} /></View>
           <View style={styles.countdownText}>
@@ -123,13 +124,8 @@ export default function HomeScreen() {
             {meeting?.location ? <PrikiText variant="caption">{meeting.location}</PrikiText> : null}
           </View>
         </View>
-        <View style={styles.countdownDecoration}>
-          <Ionicons name="moon-outline" size={21} color="#D58D9B" />
-          <View style={styles.decorationLine} />
-          <Ionicons name="sparkles-outline" size={17} color="#D58D9B" />
-        </View>
-        </Pressable>
-      </Link>
+        <Ionicons name="chevron-forward" size={20} color={colors.accent} />
+      </Pressable>
       {nextDate ? <Pressable onPress={() => router.navigate("/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
@@ -192,15 +188,13 @@ const styles = StyleSheet.create({
   moodDot: { width: 6, height: 6, borderRadius: radius.pill },
   moodLabel: { color: colors.text, fontSize: 11, lineHeight: 15 },
   coupleHeart: { position: "absolute", top: 4, left: "50%", marginLeft: -9, backgroundColor: colors.background, padding: 2 },
-  countdown: { minHeight: 132, borderRadius: radius.xl, padding: spacing.xl, backgroundColor: "#FBEAE8", borderWidth: 1, borderColor: colors.border, flexDirection: "row", justifyContent: "space-between", alignItems: "center", overflow: "hidden", ...shadows.card },
-  countdownCopy: { flexDirection: "row", alignItems: "center", gap: spacing.md, flex: 1 },
+  countdown: { minHeight: 124, borderRadius: radius.xl, padding: spacing.lg, backgroundColor: "#FBEAE8", borderWidth: 1, borderColor: colors.border, flexDirection: "row", alignItems: "center", gap: spacing.sm, ...shadows.card },
+  countdownCopy: { flexDirection: "row", alignItems: "center", gap: spacing.md, flex: 1, minWidth: 0 },
   countdownIcon: { width: 46, height: 46, borderRadius: radius.pill, backgroundColor: "#F8DAD9", alignItems: "center", justifyContent: "center" },
   countdownText: { gap: spacing.xxs, flexShrink: 1 },
   countdownLabel: { color: colors.textSecondary },
   daysRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
   daysValue: { fontSize: 28, lineHeight: 34 },
-  countdownDecoration: { alignItems: "center", justifyContent: "center", width: 55, height: 70, borderRadius: radius.lg, backgroundColor: "#F7DFDF", transform: [{ rotate: "8deg" }], gap: spacing.xs },
-  decorationLine: { width: 28, height: 1, backgroundColor: "#E6B9BE" },
   questionCard: { gap: spacing.md },
   sectionEyebrow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
   eyebrowText: { color: colors.accent },
