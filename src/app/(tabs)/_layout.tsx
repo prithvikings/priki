@@ -16,6 +16,6 @@ export default function TabsLayout(){return <Tabs screenOptions={{
  }}>{tabs.map(tab=><Tabs.Screen key={tab.name} name={tab.name} options={{title:tab.title,tabBarIcon:({focused})=><TabIcon name={tab.icon} focused={focused}/>}}/>)}</Tabs>;}
 const styles=StyleSheet.create({
  bar:{position:"absolute",left:spacing.lg,right:spacing.lg,bottom:Platform.OS==="ios"?spacing.sm:spacing.md,height:72,paddingTop:spacing.sm,paddingBottom:Platform.OS==="ios"?spacing.xs:spacing.sm,borderTopWidth:0,borderRadius:radius.xl,backgroundColor:colors.tabBar,elevation:0,shadowColor:colors.text,shadowOpacity:0.09,shadowRadius:20,shadowOffset:{width:0,height:5}},
- background:{...StyleSheet.absoluteFillObject,borderRadius:radius.xl,backgroundColor:colors.tabBar,borderWidth:1,borderColor:colors.border},
+ background:{...StyleSheet.absoluteFill,borderRadius:radius.xl,backgroundColor:colors.tabBar,borderWidth:1,borderColor:colors.border},
  label:{...typography.tab,marginTop:1,marginBottom:1},item:{paddingTop:0}
 });
