@@ -12,7 +12,7 @@ export function HistoryRow({ item, onPress }: { item: DailyHistoryItem; onPress:
       <View style={styles.copy}>
         <PrikiText variant="caption" style={styles.category}>{item.question.category}</PrikiText>
         <PrikiText variant="title" numberOfLines={2}>{item.question.text}</PrikiText>
-        <PrikiText variant="caption" numberOfLines={1}>{item.bothSubmitted ? `You: ${item.currentUserPreview} · Them: ${item.partnerPreview}` : item.skipped ? "A question you chose to revisit another time" : "One answer is still waiting"}</PrikiText>
+        <PrikiText variant="caption" numberOfLines={1}>{item.bothSubmitted ? `Both answered · You: ${item.currentUserPreview} · Them: ${item.partnerPreview}` : item.skipped ? "Skipped · left for another time" : "Not answered by both yet"}</PrikiText>
       </View>
       <View style={styles.status}><Ionicons name={item.bothSubmitted?"checkmark-circle":"chevron-forward"} size={19} color={item.bothSubmitted?colors.success:colors.textSecondary}/></View>
     </Pressable>
