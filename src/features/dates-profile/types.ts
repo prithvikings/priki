@@ -1,0 +1,11 @@
+export type PartnerId = "you" | "partner";
+export type DateKind = "relationship-start" | "anniversary" | "birthday" | "custom";
+export type PartnerProfile = { id: PartnerId; name: string; initials: string; avatarUri: string | null };
+export type CoupleProfile = { displayName: string; partners: [PartnerProfile, PartnerProfile]; relationshipStartDate: string };
+export type ImportantDate = { id: string; title: string; date: string; type: DateKind; description: string; creatorId: PartnerId | "shared" };
+export type Meeting = { title: string; date: string; time: string; location: string } | null;
+export type ManualMilestone = { id: string; title: string; date: string; description: string; creatorId: PartnerId };
+export type NotificationPreferences = { loveNotes: boolean; dailyUs: boolean; meetingReminders: boolean; affection: boolean };
+export type CoupleSettings = { timezone: string; dateFormat: "long" | "short" | "numeric"; privacyPreference: "private" | "minimal" };
+export type DateDraft = Pick<ImportantDate, "title" | "date" | "type" | "description">;
+export type MilestoneDraft = Pick<ManualMilestone, "title" | "date" | "description">;
