@@ -5,6 +5,7 @@ import { createMockHistory } from "./mockHistory";
 import type { DailyAnswer, DailyEntryView, DailyHistoryItem, DailyQuestionEntry } from "./types";
 
 type DailyUsContextValue = {
+  now: Date;
   currentEntry: DailyEntryView;
   history: DailyHistoryItem[];
   getHistoricalEntry: (dateKey: string) => DailyEntryView | null;
@@ -143,6 +144,7 @@ export function DailyUsProvider({ children }: PropsWithChildren) {
     }), [entries, todayKey]);
 
   const value = useMemo(() => ({
+    now,
     currentEntry,
     history,
     getHistoricalEntry,
@@ -151,7 +153,7 @@ export function DailyUsProvider({ children }: PropsWithChildren) {
     revisitToday,
     togglePartnerAnswerReaction,
     simulatePartnerSubmission,
-  }), [currentEntry, history, getHistoricalEntry, submitAnswer, skipToday, revisitToday, togglePartnerAnswerReaction, simulatePartnerSubmission]);
+  }), [now, currentEntry, history, getHistoricalEntry, submitAnswer, skipToday, revisitToday, togglePartnerAnswerReaction, simulatePartnerSubmission]);
 
   return <DailyUsContext.Provider value={value}>{children}</DailyUsContext.Provider>;
 }
