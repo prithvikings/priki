@@ -143,7 +143,7 @@ export default function HomeScreen() {
       <SurfaceCard style={styles.questionCard}>
         <View style={styles.sectionEyebrow}>
           <Ionicons name="chatbubble-ellipses-outline" size={19} color={colors.accent} />
-          <PrikiText variant="title" style={styles.eyebrowText}>Today's Daily Us</PrikiText>
+          <PrikiText variant="title" style={styles.eyebrowText}>Today&apos;s Daily Us</PrikiText>
         </View>
         <PrikiText variant="h3" style={styles.question}>{currentEntry.question.text}</PrikiText>
         <View style={styles.answerStatusRow}>

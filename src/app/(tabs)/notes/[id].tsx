@@ -13,7 +13,7 @@ export default function NoteDetailScreen() {
   const {notes,markOpened,toggleHeart,cancelScheduled}=useNotes();
   const note=notes.find(item=>item.id===id);
 
-  if(!note) return <ScreenContainer contentStyle={styles.content}><PrikiText variant="h2">This note isn't here.</PrikiText><SecondaryButton title="Back to Love Notes" onPress={()=>router.back()}/></ScreenContainer>;
+  if(!note) return <ScreenContainer contentStyle={styles.content}><PrikiText variant="h2">This note isn&apos;t here.</PrikiText><SecondaryButton title="Back to Love Notes" onPress={()=>router.back()}/></ScreenContainer>;
 
   const received=note.senderId==="partner";
   const editable=note.senderId==="you";

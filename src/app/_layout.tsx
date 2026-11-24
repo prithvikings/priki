@@ -8,7 +8,7 @@ export default function RootLayout() {
   return (
     <NotesProvider>
       <DailyUsProvider>
-        <StatusBar style="dark" backgroundColor={colors.background} />
+        <StatusBar style="dark" />
         <Stack screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: colors.background },

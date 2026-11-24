@@ -23,8 +23,17 @@ export function NotesFilter({ value, onChange }: { value: NoteFilter; onChange: 
 }
 
 const styles = StyleSheet.create({
-  row: { gap: spacing.sm, paddingVertical: spacing.xs },
-  chip: { paddingHorizontal: spacing.xl, paddingVertical: spacing.md, borderRadius: radius.pill, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
+  row: { gap: spacing.sm, paddingVertical: spacing.xs, alignItems: "center" },
+  chip: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: radius.pill,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   active: { backgroundColor: colors.primary, borderColor: colors.primary },
   label: { color: colors.textSecondary, fontWeight: "600" },
   activeLabel: { color: colors.white },

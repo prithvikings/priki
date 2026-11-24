@@ -42,7 +42,7 @@ export function NoteComposer({
   const [body, setBody] = useState(initialBody);
   const [photoUri, setPhotoUri] = useState<string | null>(initialPhotoUri);
   const [showScheduler, setShowScheduler] = useState(Boolean(initialSchedule));
-  const [scheduleValue, setScheduleValue] = useState(initialSchedule ? localDateTimeValue(new Date(initialSchedule)) : localDateTimeValue(new Date(Date.now() + 86_400_000)));
+  const [scheduleValue, setScheduleValue] = useState(() => (initialSchedule ? localDateTimeValue(new Date(initialSchedule)) : localDateTimeValue(new Date(Date.now() + 86_400_000))));
   const [error, setError] = useState("");
 
   const getInput = (): NoteDraftInput => ({ title, body, photoUri, scheduledFor: null });
@@ -103,7 +103,7 @@ export function NoteComposer({
         <Ionicons name={photoUri ? "image" : "image-outline"} size={20} color={colors.accent} />
         <View style={styles.attachmentCopy}>
           <PrikiText variant="title" style={styles.attachmentTitle}>{photoUri ? "Photo placeholder attached" : "Add a little photo"}</PrikiText>
-          <PrikiText variant="caption">Visual preview only · uploads aren't enabled</PrikiText>
+          <PrikiText variant="caption">Visual preview only · uploads aren&apos;t enabled</PrikiText>
         </View>
         <Ionicons name={photoUri ? "close-circle" : "add-circle-outline"} size={20} color={colors.textSecondary} />
       </Pressable>
@@ -117,7 +117,7 @@ export function NoteComposer({
             <TextInput value={scheduleValue.slice(0,10)} onChangeText={(value) => setScheduleValue(`${value}T${scheduleValue.slice(11,16)}`)} placeholder="YYYY-MM-DD" style={[styles.dateInput, styles.dateField]} autoCapitalize="none" />
             <TextInput value={scheduleValue.slice(11,16)} onChangeText={(value) => setScheduleValue(`${scheduleValue.slice(0,10)}T${value}`)} placeholder="HH:mm" style={[styles.dateInput, styles.timeField]} autoCapitalize="none" />
           </View>
-          <PrikiText variant="caption">Use your device's local date and time. The selected time must be in the future.</PrikiText>
+          <PrikiText variant="caption">Use your device&apos;s local date and time. The selected time must be in the future.</PrikiText>
           {scheduleValue && !Number.isNaN(new Date(scheduleValue).getTime()) ? <PrikiText variant="caption" style={styles.scheduledPreview}>Planned for {formatSchedule(new Date(scheduleValue).toISOString())}</PrikiText> : null}
           <SecondaryButton title="Confirm schedule" onPress={handleSchedule} />
         </View>
