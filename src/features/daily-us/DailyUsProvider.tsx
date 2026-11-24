@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { mockCouple } from "@/data/mockData";
 import { DEMO_COUPLE_ID, getCoupleDateKey, getDailyQuestion, SHARED_COUPLE_TIMEZONE } from "./dailyQuestion";
 import { createMockHistory } from "./mockHistory";
-import type { DailyAnswer, DailyEntryView, DailyHistoryItem, DailyQuestionEntry } from "./types";
+import type { DailyAnswer, DailyEntryView, DailyHistoryItem, DailyQuestionEntry, DailyReaction } from "./types";
 
 type DailyUsContextValue = {
   now: Date;
@@ -22,8 +22,7 @@ function createEntry(dateKey: string): DailyQuestionEntry {
     question: getDailyQuestion(dateKey, DEMO_COUPLE_ID),
     currentUserAnswer: null,
     partnerAnswer: null,
-    currentUserReactedToPartner: false,
-    partnerReactedToCurrentUser: false,
+    reactions: [],
     skipped: false,
   };
 }
@@ -38,8 +37,13 @@ function toView(entry: DailyQuestionEntry): DailyEntryView {
     currentUserSubmitted: Boolean(entry.currentUserAnswer),
     partnerSubmitted: Boolean(entry.partnerAnswer),
     bothSubmitted,
-    currentUserReactedToPartner: bothSubmitted && entry.currentUserReactedToPartner,
-    partnerReactedToCurrentUser: bothSubmitted && entry.partnerReactedToCurrentUser,
+    submissionStatus: {
+      currentUser: entry.currentUserAnswer ? "submitted" : "waiting",
+      partner: entry.partnerAnswer ? "submitted" : "waiting",
+      bothSubmitted,
+    },
+    currentUserReactedToPartner: bothSubmitted && entry.reactions.some((reaction) => reaction.fromPartnerId === "you" && reaction.toPartnerId === "partner" && reaction.kind === "heart"),
+    partnerReactedToCurrentUser: bothSubmitted && entry.reactions.some((reaction) => reaction.fromPartnerId === "partner" && reaction.toPartnerId === "you" && reaction.kind === "heart"),
     skipped: entry.skipped,
   };
 }
@@ -97,7 +101,11 @@ export function DailyUsProvider({ children }: PropsWithChildren) {
     setEntries((current) => {
       const entry = current[todayKey] ?? createEntry(todayKey);
       if (!entry.currentUserAnswer || !entry.partnerAnswer) return current;
-      return { ...current, [todayKey]: { ...entry, currentUserReactedToPartner: !entry.currentUserReactedToPartner } };
+      const existing = entry.reactions.some((reaction) => reaction.fromPartnerId === "you" && reaction.toPartnerId === "partner" && reaction.kind === "heart");
+      const reactions = existing
+        ? entry.reactions.filter((reaction) => !(reaction.fromPartnerId === "you" && reaction.toPartnerId === "partner" && reaction.kind === "heart"))
+        : [...entry.reactions, { id: `reaction-${Date.now()}`, fromPartnerId: "you", toPartnerId: "partner", kind: "heart", createdAt: new Date().toISOString() } satisfies DailyReaction];
+      return { ...current, [todayKey]: { ...entry, reactions } };
     });
   }, [todayKey]);
 
@@ -116,7 +124,7 @@ export function DailyUsProvider({ children }: PropsWithChildren) {
         [todayKey]: {
           ...entry,
           partnerAnswer: answer,
-          partnerReactedToCurrentUser: true,
+          reactions: [...entry.reactions, { id: `reaction-${Date.now()}`, fromPartnerId: "partner", toPartnerId: "you", kind: "heart", createdAt: new Date().toISOString() }],
         },
       };
     });
