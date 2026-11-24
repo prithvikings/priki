@@ -10,7 +10,7 @@ import {
   SectionHeader,
   SurfaceCard,
 } from "@/components";
-import { homeMockData, type MoodTone } from "@/data/mockData";
+import { homeMockData, type MoodTone, type PartnerProfile as HomePartnerProfile } from "@/data/mockData";
 import { useDatesProfile } from "@/features/dates-profile/DatesProfileProvider";
 import { formatDateKey, getMeetingCountdown } from "@/features/dates-profile/dateUtils";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
@@ -34,7 +34,7 @@ function formatDate(date: string) {
   });
 }
 
-function ProfileMood({ profile }: { profile: (typeof homeMockData.couple.profiles)[number] }) {
+function ProfileMood({ profile }: { profile: HomePartnerProfile }) {
   return (
     <View style={styles.profile}>
       <View style={[styles.avatarRing, { borderColor: moodColors[profile.mood.tone] }]}>
