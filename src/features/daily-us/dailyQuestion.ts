@@ -25,9 +25,11 @@ function hash(value: string) {
   return result >>> 0;
 }
 
-/** Stable for a couple + couple-local calendar day. Never depends on device timezone or mount count. */
+/** Stable for a couple + couple-local calendar day, with no repeat until the bank has cycled. */
 export function getDailyQuestion(dateKey: string, coupleId = DEMO_COUPLE_ID): DailyQuestion {
-  const index = hash(`${coupleId}:${dateKey}`) % questionBank.length;
+  const [year, month, day] = dateKey.split("-").map(Number);
+  const dayNumber = Math.floor(Date.UTC(year, month - 1, day) / 86_400_000);
+  const index = (hash(coupleId) + dayNumber) % questionBank.length;
   const question = questionBank[index];
   return { id: question.id, category: question.category, text: question.text };
 }
