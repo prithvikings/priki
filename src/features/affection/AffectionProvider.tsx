@@ -25,7 +25,10 @@ export function AffectionProvider({ children }: PropsWithChildren) {
     setReasons(current => [next, ...current]); return next.id;
   }, []);
   const toggleFavorite = useCallback((reasonId: string) => setReasons(current => current.map(reason => reason.id === reasonId ? { ...reason, isFavorite: !reason.isFavorite } : reason)), []);
-  const deleteReason = useCallback((reasonId: string) => setReasons(current => current.filter(reason => reason.id !== reasonId || reason.creator.id !== you.id)), []);
+  const deleteReason = useCallback((reasonId: string) => {
+    setReasons(current => current.filter(reason => reason.id !== reasonId || reason.creator.id !== you.id));
+    setPickedReason(current => current?.id === reasonId ? null : current);
+  }, []);
   const getReason = useCallback((reasonId: string) => reasons.find(reason => reason.id === reasonId), [reasons]);
   const pickReason = useCallback(() => {
     if (!reasons.length) { setPickedReason(null); return undefined; }
