@@ -1,6 +1,6 @@
-import { Tabs, usePathname, useSegments } from "expo-router";
-import { useEffect } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Tabs } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabIcon, type TabIconName } from "@/components/TabIcon";
 import { colors, radius, spacing, typography } from "@/theme";
 
@@ -13,12 +13,7 @@ const tabs: { name: string; title: string; icon: TabIconName }[] = [
 ];
 
 export default function TabsLayout() {
-  const pathname = usePathname();
-  const segments = useSegments();
-  useEffect(() => {
-    console.log("[Priki][Tabs] Active route changed", { pathname, segments });
-  }, [pathname, segments]);
-  console.log("[Priki][Tabs] Layout rendered", { pathname, segments });
+  const insets = useSafeAreaInsets();
   return (
     <Tabs screenOptions={{
       headerShown: false,
@@ -26,7 +21,7 @@ export default function TabsLayout() {
       tabBarInactiveTintColor: colors.textSecondary,
       tabBarLabelStyle: styles.label,
       tabBarItemStyle: styles.item,
-      tabBarStyle: styles.bar,
+      tabBarStyle: [styles.bar, { height: 76 + insets.bottom, paddingBottom: Math.max(insets.bottom, spacing.sm) }],
       tabBarBackground: () => <View style={styles.background} />,
       sceneStyle: { backgroundColor: colors.background },
     }}>
@@ -40,11 +35,11 @@ export default function TabsLayout() {
           }}
         />
       ))}
-      <Tabs.Screen name="dates" options={{ tabBarButton: () => null }} />
-      <Tabs.Screen name="milestones" options={{ tabBarButton: () => null }} />
-      <Tabs.Screen name="milestone" options={{ tabBarButton: () => null }} />
-      <Tabs.Screen name="profile" options={{ tabBarButton: () => null }} />
-      <Tabs.Screen name="settings" options={{ tabBarButton: () => null }} />
+      <Tabs.Screen name="dates" options={{ tabBarButton: () => null, tabBarItemStyle: styles.hiddenItem }} />
+      <Tabs.Screen name="milestones" options={{ tabBarButton: () => null, tabBarItemStyle: styles.hiddenItem }} />
+      <Tabs.Screen name="milestone" options={{ tabBarButton: () => null, tabBarItemStyle: styles.hiddenItem }} />
+      <Tabs.Screen name="profile" options={{ tabBarButton: () => null, tabBarItemStyle: styles.hiddenItem }} />
+      <Tabs.Screen name="settings" options={{ tabBarButton: () => null, tabBarItemStyle: styles.hiddenItem }} />
     </Tabs>
   );
 }
@@ -53,9 +48,9 @@ const styles = StyleSheet.create({
   bar: {
     height: 76,
     marginHorizontal: spacing.lg,
-    marginBottom: Platform.OS === "ios" ? spacing.sm : spacing.md,
+    marginBottom: 0,
     paddingTop: spacing.sm,
-    paddingBottom: Platform.OS === "ios" ? spacing.xs : spacing.sm,
+    paddingBottom: spacing.sm,
     borderTopWidth: 0,
     borderRadius: radius.xl,
     backgroundColor: colors.tabBar,
@@ -67,5 +62,6 @@ const styles = StyleSheet.create({
   },
   background: { ...StyleSheet.absoluteFill, borderRadius: radius.xl, backgroundColor: colors.tabBar, borderWidth: 1, borderColor: colors.border },
   label: { ...typography.tab, marginTop: 1, marginBottom: 1 },
-  item: { paddingTop: 0 },
+  item: { paddingTop: 0, flex: 1, minWidth: 0 },
+  hiddenItem: { display: "none" },
 });
