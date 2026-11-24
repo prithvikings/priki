@@ -26,14 +26,6 @@ const moodColors: Record<MoodTone, string> = {
   loved: colors.primary,
 };
 
-function daysUntil(date: string) {
-  const [year, month, day] = date.split("-").map(Number);
-  const target = new Date(year, month - 1, day);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return Math.max(0, Math.ceil((target.getTime() - today.getTime()) / 86_400_000));
-}
-
 function formatDate(date: string) {
   return new Date(`${date}T12:00:00`).toLocaleDateString("en-IN", {
     day: "numeric",
@@ -116,19 +108,19 @@ export default function HomeScreen() {
 
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`Until we meet, ${days} days remaining`}
-        onPress={() => Alert.alert("Until We Meet", `Your next meeting is ${formatDate(homeMockData.meeting.date)}.`)}
+        onPress={() => router.push("/(tabs)/dates")}
         style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
       >
         <View style={styles.countdownCopy}>
           <View style={styles.countdownIcon}><Ionicons name="calendar-outline" size={23} color={colors.accent} /></View>
           <View style={styles.countdownText}>
-            <PrikiText variant="caption" style={styles.countdownLabel}>{homeMockData.meeting.label}</PrikiText>
+            <PrikiText variant="caption" style={styles.countdownLabel}>{meeting?.title ?? "Our next hello"}</PrikiText>
             <View style={styles.daysRow}>
-              <PrikiText variant="h1" style={styles.daysValue}>{days} days</PrikiText>
+              <PrikiText variant="h1" style={styles.daysValue}>{meeting ? countdown?.state === "past" ? "Time to plan" : countdown?.state === "today" ? "Today" : String(countdown?.days) + " days" : "Not planned yet"}</PrikiText>
               <Ionicons name="chevron-forward" size={20} color={colors.accent} />
             </View>
-            <PrikiText variant="caption">{formatDate(homeMockData.meeting.date)}</PrikiText>
+            <PrikiText variant="caption">{meeting ? formatDateKey(meeting.date, settings.dateFormat) : "Tap to plan your next meeting"}</PrikiText>
+            {meeting?.location ? <PrikiText variant="caption">{meeting.location}</PrikiText> : null}
           </View>
         </View>
         <View style={styles.countdownDecoration}>
@@ -137,6 +129,7 @@ export default function HomeScreen() {
           <Ionicons name="sparkles-outline" size={17} color="#D58D9B" />
         </View>
       </Pressable>
+      {nextDate ? <Pressable onPress={() => router.push("/(tabs)/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
         <View style={styles.sectionEyebrow}>
