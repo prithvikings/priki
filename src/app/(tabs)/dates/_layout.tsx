@@ -1,17 +1,9 @@
-import { Stack, usePathname, useSegments } from "expo-router";
-import { useEffect } from "react";
+import { Stack } from "expo-router";
 import { colors } from "@/theme";
 
 export const unstable_settings = { anchor: "index" };
 
 export default function DatesLayout() {
-  const pathname = usePathname();
-  const segments = useSegments();
-  useEffect(() => {
-    console.log("[Priki][DatesLayout] Mounted; route state", { pathname, segments });
-    return () => console.log("[Priki][DatesLayout] Unmounted");
-  }, []);
-  console.log("[Priki][DatesLayout] Rendered", { pathname, segments });
   return (
     <Stack
       screenOptions={{
