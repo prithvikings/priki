@@ -40,11 +40,11 @@ export default function TabsLayout() {
           }}
         />
       ))}
-      <Tabs.Screen name="dates" options={{ href: null }} />
-      <Tabs.Screen name="milestones" options={{ href: null }} />
-      <Tabs.Screen name="milestone" options={{ href: null }} />
-      <Tabs.Screen name="profile" options={{ href: null }} />
-      <Tabs.Screen name="settings" options={{ href: null }} />
+      <Tabs.Screen name="dates" options={{ tabBarButton: () => null }} />
+      <Tabs.Screen name="milestones" options={{ tabBarButton: () => null }} />
+      <Tabs.Screen name="milestone" options={{ tabBarButton: () => null }} />
+      <Tabs.Screen name="profile" options={{ tabBarButton: () => null }} />
+      <Tabs.Screen name="settings" options={{ tabBarButton: () => null }} />
     </Tabs>
   );
 }
