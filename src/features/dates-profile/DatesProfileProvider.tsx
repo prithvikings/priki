@@ -8,7 +8,7 @@ const updateProfile=useCallback((value:CoupleProfile)=>{setProfile(value);setDat
 const setRelationshipStartDate=useCallback((date:string)=>{setProfile(p=>({...p,relationshipStartDate:date}));setDates(current=>current.map(d=>d.type==="relationship-start"?{...d,date}:d));},[]);
 const addDate=useCallback((input:DateDraft)=>{if(input.type==="relationship-start"){setRelationshipStartDate(input.date);return;}setDates(c=>[...c,{...input,id:id("date"),description:input.description.trim(),creatorId:"you"}]);},[setRelationshipStartDate]);
 const updateDate=useCallback((dateId:string,input:DateDraft)=>{if(input.type==="relationship-start"){setRelationshipStartDate(input.date);return;}setDates(c=>c.map(d=>d.id===dateId?{...d,...input,description:input.description.trim()}:d));},[setRelationshipStartDate]);
-const deleteDate=useCallback((dateId:string)=>setDates(c=>c.filter(d=>d.id!==dateId&&d.type!=="relationship-start")),[]);
+const deleteDate=useCallback((dateId:string)=>setDates(c=>c.filter(d=>d.id!==dateId||d.type==="relationship-start")),[]);
 const addMilestone=useCallback((input:MilestoneDraft)=>setManualMilestones(c=>[...c,{...input,id:id("milestone"),description:input.description.trim(),creatorId:"you"}]),[]);
 const updateMilestone=useCallback((mid:string,input:MilestoneDraft)=>setManualMilestones(c=>c.map(m=>m.id===mid?{...m,...input,description:input.description.trim()}:m)),[]);
 const deleteMilestone=useCallback((mid:string)=>setManualMilestones(c=>c.filter(m=>m.id!==mid)),[]);
