@@ -12,7 +12,7 @@ import {
 } from "@/components";
 import { homeMockData, type MoodTone, type PartnerProfile as HomePartnerProfile } from "@/data/mockData";
 import { useDatesProfile } from "@/features/dates-profile/DatesProfileProvider";
-import { formatDateKey, getMeetingCountdown } from "@/features/dates-profile/dateUtils";
+import { coupleDateKey, formatDateKey, getMeetingCountdown } from "@/features/dates-profile/dateUtils";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { useMemories } from "@/features/memories/MemoriesProvider";
 import { useAffection } from "@/features/affection/AffectionProvider";
@@ -80,7 +80,7 @@ export default function HomeScreen() {
   const { profile, meeting, settings, dates } = useDatesProfile();
   const latestMemory = [...memories].sort((a, b) => b.memoryDate.localeCompare(a.memoryDate) || b.createdAt.localeCompare(a.createdAt))[0];
   const countdown = meeting ? getMeetingCountdown(meeting.date, new Date(), settings.timezone) : null;
-  const todayKey = new Intl.DateTimeFormat("en-CA", { timeZone: settings.timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const todayKey = coupleDateKey(new Date(), settings.timezone);
   const nextDate = dates.filter((item) => item.date >= todayKey).sort((a, b) => a.date.localeCompare(b.date))[0];
 
 
