@@ -124,9 +124,8 @@ export default function HomeScreen() {
             {meeting?.location ? <PrikiText variant="caption">{meeting.location}</PrikiText> : null}
           </View>
         </View>
-        <Ionicons name="chevron-forward" size={20} color={colors.accent} />
       </Pressable>
-      {nextDate ? <Pressable onPress={() => router.navigate("/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
+      {nextDate ? <Pressable onPress={() => router.push("/(tabs)/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
         <View style={styles.sectionEyebrow}>
