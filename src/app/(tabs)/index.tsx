@@ -3,7 +3,6 @@ import {
   Alert,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   View,
   useWindowDimensions,
@@ -23,7 +22,7 @@ import {
 import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
 import { colors, radius, shadows, spacing } from "@/theme";
 
-const sunsetImage = require("@/../assets/images/splash-icon.png");
+const sunsetImage = require("@/../assets/images/priki-home-reference.png");
 
 const tabRoutes = {
   notes: "/(tabs)/notes",
