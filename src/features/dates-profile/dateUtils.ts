@@ -57,7 +57,7 @@ export function getAutomaticMilestones(startDate:string, now:Date, timeZone:stri
     const total=sm-1+monthCount,year=sy+Math.floor(total/12),month=((total%12)+12)%12+1;
     const last=new Date(Date.UTC(year,month,0)).getUTCDate(),day=Math.min(sd,last);
     const key=`${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-    if(key>=startDate) add(`month-${year}-${month}`,`${monthCount} months together`,key,"Another little chapter together.");
+    if(key>=startDate && monthCount%12!==0) add(`month-${year}-${month}`,`${monthCount} months together`,key,"Another little chapter together.");
   }
   for(let year=sy+1;year<=ty+2;year++){
     const last=new Date(Date.UTC(year,sm,0)).getUTCDate(),day=Math.min(sd,last),key=`${year}-${String(sm).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
