@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, PrikiText } from "@/components";
 import { colors, radius, spacing } from "@/theme";
@@ -23,7 +23,10 @@ export function AnswerCard({ name, initials, answer, isCurrentUser, reacted = fa
       </View>
       <PrikiText variant="body" style={styles.answer}>{answer}</PrikiText>
       {!isCurrentUser && onReact ? (
-        <View style={styles.footer}><View style={styles.spacer}/><View accessibilityLabel={reacted ? "You reacted with a heart" : "No heart reaction"}><Ionicons name={reacted ? "heart" : "heart-outline"} size={15} color={colors.accent}/></View><PrikiText variant="caption" style={styles.reactionText}>{reacted ? "A heart from you" : "Send a little heart"}</PrikiText><View style={styles.spacer}/></View>
+        <Pressable accessibilityRole="button" accessibilityLabel={reacted ? "Remove heart reaction" : "React to partner answer with a heart"} accessibilityState={{selected:reacted}} onPress={onReact} style={styles.footer}>
+          <Ionicons name={reacted ? "heart" : "heart-outline"} size={17} color={colors.accent}/>
+          <PrikiText variant="caption" style={styles.reactionText}>{reacted ? "A heart from you · Tap to remove" : "Send a little heart"}</PrikiText>
+        </Pressable>
       ) : null}
     </View>
   );
@@ -38,6 +41,5 @@ const styles = StyleSheet.create({
   answer: { lineHeight: 25 },
   reactionNote: { flexDirection: "row", alignItems: "center", gap: 4 },
   reactionText: { color: colors.accent, fontSize: 11 },
-  footer: { flexDirection: "row", alignItems: "center", gap: spacing.xs },
-  spacer: { flex: 1 },
+  footer: { flexDirection: "row", alignItems: "center", gap: spacing.xs, alignSelf: "flex-start", paddingTop: spacing.xs },
 });
