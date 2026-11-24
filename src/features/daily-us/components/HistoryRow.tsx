@@ -2,7 +2,6 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "@/theme";
 import { PrikiText } from "@/components/PrikiText";
-import { formatCoupleDate } from "../dailyQuestion";
 import type { DailyHistoryItem } from "../types";
 
 export function HistoryRow({ item, onPress }: { item: DailyHistoryItem; onPress: () => void }) {
