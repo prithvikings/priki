@@ -50,6 +50,7 @@ function toView(entry: DailyQuestionEntry): DailyEntryView {
 }
 
 export function DailyUsProvider({ children }: PropsWithChildren) {
+  const { settings } = useDatesProfile();
   const [now, setNow] = useState(() => new Date());
   const [entries, setEntries] = useState<Record<string, DailyQuestionEntry>>(() => {
     const todayKey = getCoupleDateKey(new Date(), settings.timezone);
