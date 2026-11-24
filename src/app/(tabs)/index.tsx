@@ -12,6 +12,8 @@ import {
   SurfaceCard,
 } from "@/components";
 import { homeMockData, type MoodTone } from "@/data/mockData";
+import { useDatesProfile } from "@/features/dates-profile/DatesProfileProvider";
+import { formatDateKey, getMeetingCountdown } from "@/features/dates-profile/dateUtils";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { useMemories } from "@/features/memories/MemoriesProvider";
 import { useAffection } from "@/features/affection/AffectionProvider";
@@ -84,8 +86,11 @@ export default function HomeScreen() {
   const { currentEntry } = useDailyUs();
   const { memories } = useMemories();
   const { reasons } = useAffection();
+  const { profile, meeting, settings, dates } = useDatesProfile();
   const latestMemory = [...memories].sort((a, b) => b.memoryDate.localeCompare(a.memoryDate) || b.createdAt.localeCompare(a.createdAt))[0];
-  const days = useMemo(() => daysUntil(homeMockData.meeting.date), []);
+  const countdown = meeting ? getMeetingCountdown(meeting.date, new Date(), settings.timezone) : null;
+  const todayKey = new Intl.DateTimeFormat("en-CA", { timeZone: settings.timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const nextDate = dates.filter((item) => item.date >= todayKey).sort((a, b) => a.date.localeCompare(b.date))[0];
 
 
 
@@ -95,7 +100,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader onProfilePress={() => Alert.alert("Your profile", "Profile and settings will be available in a future phase.")} />
+      <AppHeader onProfilePress={() => router.push("/(tabs)/profile")} />
 
       <View style={styles.greeting}>
         <PrikiText variant="display">A little closer,</PrikiText>
@@ -104,7 +109,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.coupleRow}>
-        {homeMockData.couple.profiles.map((profile) => <ProfileMood key={profile.id} profile={profile} />)}
+        {homeMockData.couple.profiles.map((mockProfile) => <ProfileMood key={mockProfile.id} profile={{ ...mockProfile, name: profile.partners.find((partner) => partner.id === mockProfile.id)?.name ?? mockProfile.name }} />)}
         <View style={styles.coupleHeart}>
           <Ionicons name="heart" size={17} color={colors.accent} />
         </View>
