@@ -6,7 +6,7 @@ import { PrikiText } from "./PrikiText";
 
 type Props = { title?: string; eyebrow?: string; onProfilePress?: () => void };
 
-export function AppHeader({ title = "priki", eyebrow = "A LITTLE CLOSER, EVERY DAY.", onProfilePress }: Props) {
+export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY DAY.", onProfilePress }: Props) {
   return (
     <View style={styles.row}>
       <View style={styles.copy}>
@@ -33,5 +33,5 @@ const styles = StyleSheet.create({
   notification: { width: 38, height: 38, alignItems: "center", justifyContent: "center" },
   notificationDot: { position: "absolute", top: 4, right: 5, width: 8, height: 8, borderRadius: 4, backgroundColor: colors.primary, borderWidth: 1, borderColor: colors.background },
   eyebrow: { color: colors.accent },
-  title: { textTransform: "lowercase" },
+  title: {},
 });
