@@ -9,6 +9,7 @@ export default function RootLayout() {
   return (
     <NotesProvider>
       <DailyUsProvider>
+        <MemoriesProvider>
         <StatusBar style="dark" />
         <Stack screenOptions={{
           headerShown: false,
@@ -17,6 +18,7 @@ export default function RootLayout() {
         }}>
           <Stack.Screen name="(tabs)" />
         </Stack>
+        </MemoriesProvider>
       </DailyUsProvider>
     </NotesProvider>
   );
