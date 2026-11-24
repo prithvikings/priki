@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type PropsWithChildren } from "react";
 import { mockCouple } from "@/data/mockData";
-import { DEMO_COUPLE_ID, getCoupleDateKey, getDailyQuestion, SHARED_COUPLE_TIMEZONE } from "./dailyQuestion";
+import { useDatesProfile } from "@/features/dates-profile/DatesProfileProvider";
+import { DEMO_COUPLE_ID, getCoupleDateKey, getDailyQuestion } from "./dailyQuestion";
 import { createMockHistory } from "./mockHistory";
 import type { DailyAnswer, DailyEntryView, DailyHistoryItem, DailyQuestionEntry, DailyReaction } from "./types";
 
@@ -51,11 +52,11 @@ function toView(entry: DailyQuestionEntry): DailyEntryView {
 export function DailyUsProvider({ children }: PropsWithChildren) {
   const [now, setNow] = useState(() => new Date());
   const [entries, setEntries] = useState<Record<string, DailyQuestionEntry>>(() => {
-    const todayKey = getCoupleDateKey(new Date(), SHARED_COUPLE_TIMEZONE);
+    const todayKey = getCoupleDateKey(new Date(), settings.timezone);
     return { ...createMockHistory(todayKey), [todayKey]: createEntry(todayKey) };
   });
 
-  const todayKey = getCoupleDateKey(now, SHARED_COUPLE_TIMEZONE);
+  const todayKey = getCoupleDateKey(now, settings.timezone);
 
   useEffect(() => {
     const interval = setInterval(() => setNow(new Date()), 60_000);
