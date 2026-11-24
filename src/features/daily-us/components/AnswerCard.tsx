@@ -27,6 +27,8 @@ export function AnswerCard({ name, initials, answer, isCurrentUser, reacted = fa
           <Ionicons name={reacted ? "heart" : "heart-outline"} size={17} color={colors.accent}/>
           <PrikiText variant="caption" style={styles.reactionText}>{reacted ? "A heart from you · Tap to remove" : "Send a little heart"}</PrikiText>
         </Pressable>
+      ) : !isCurrentUser && reacted ? (
+        <View style={styles.footer}><Ionicons name="heart" size={17} color={colors.accent}/><PrikiText variant="caption" style={styles.reactionText}>A heart from you</PrikiText></View>
       ) : null}
     </View>
   );
