@@ -146,8 +146,8 @@ export default function HomeScreen() {
         <PrikiText variant="h3" style={styles.question}>{homeMockData.dailyQuestion.prompt}</PrikiText>
         <View style={styles.answerStatusRow}>
           <View style={styles.answerStatus}>
-            <Ionicons name="checkmark-circle" size={17} color={colors.success} />
-            <PrikiText variant="caption">You answered</PrikiText>
+            <Ionicons name={homeMockData.dailyQuestion.currentUserAnswered ? "checkmark-circle" : "ellipse-outline"} size={17} color={homeMockData.dailyQuestion.currentUserAnswered ? colors.success : colors.textSecondary} />
+            <PrikiText variant="caption">{homeMockData.dailyQuestion.currentUserAnswered ? "You answered" : "You have not answered"}</PrikiText>
           </View>
           <View style={styles.answerStatus}>
             <Ionicons name="time-outline" size={17} color={colors.textSecondary} />
@@ -263,7 +263,6 @@ const styles = StyleSheet.create({
   memoryImage: { width: 116, height: 116, borderRadius: radius.md, backgroundColor: colors.surfaceMuted },
   memoryCopy: { flex: 1, gap: spacing.xs },
   memoryCaption: { fontSize: 12, lineHeight: 17 },
-  memoryDate: { color: colors.accent, fontWeight: "600" },
   affectionSection: { gap: spacing.sm },
   affectionRow: { flexDirection: "row", gap: spacing.sm },
   affectionButton: { flex: 1, minHeight: 68, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5, paddingHorizontal: 4 },
