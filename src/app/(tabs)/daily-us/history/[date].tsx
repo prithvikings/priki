@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, PrikiText, ScreenContainer, SurfaceCard } from "@/components";
+import { Avatar, PrikiText, ScreenContainer, SurfaceCard, SecondaryButton } from "@/components";
 import { colors, spacing } from "@/theme";
 import { mockCouple } from "@/data/mockData";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
@@ -19,6 +19,7 @@ export default function DailyUsHistoryDetailScreen() {
     <ScreenContainer contentStyle={styles.content}>
       <View style={styles.topBar}><Pressable accessibilityRole="button" onPress={()=>router.back()} style={styles.back}><Ionicons name="chevron-back" size={22} color={colors.text}/></Pressable><PrikiText variant="title">A moment from before</PrikiText><View style={styles.back}/></View>
       <DailyQuestionCard question={entry.question} dateLabel={formatCoupleDate(entry.dateKey)}/>
+      <SecondaryButton title="Return to today's question" onPress={()=>router.navigate("/(tabs)/daily-us")}/>
       {entry.bothSubmitted ? (
         <View style={styles.answers}>
           <PrikiText variant="h3">Your two perspectives</PrikiText>
