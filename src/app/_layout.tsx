@@ -4,12 +4,14 @@ import { colors } from "@/theme";
 import { NotesProvider } from "@/features/notes/NotesProvider";
 import { DailyUsProvider } from "@/features/daily-us/DailyUsProvider";
 import { MemoriesProvider } from "@/features/memories/MemoriesProvider";
+import { AffectionProvider } from "@/features/affection/AffectionProvider";
 
 export default function RootLayout() {
   return (
     <NotesProvider>
       <DailyUsProvider>
         <MemoriesProvider>
+        <AffectionProvider>
         <StatusBar style="dark" />
         <Stack screenOptions={{
           headerShown: false,
@@ -18,6 +20,7 @@ export default function RootLayout() {
         }}>
           <Stack.Screen name="(tabs)" />
         </Stack>
+        </AffectionProvider>
         </MemoriesProvider>
       </DailyUsProvider>
     </NotesProvider>
