@@ -10,22 +10,22 @@ import { DatesProfileProvider } from "@/features/dates-profile/DatesProfileProvi
 export default function RootLayout() {
   return (
     <NotesProvider>
-      <DailyUsProvider>
-        <MemoriesProvider>
-        <AffectionProvider>
-        <DatesProfileProvider>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: colors.background },
-          animation: "fade",
-        }}>
-          <Stack.Screen name="(tabs)" />
-        </Stack>
-        </DatesProfileProvider>
-        </AffectionProvider>
-        </MemoriesProvider>
-      </DailyUsProvider>
+      <DatesProfileProvider>
+        <DailyUsProvider>
+          <MemoriesProvider>
+            <AffectionProvider>
+              <StatusBar style="dark" />
+              <Stack screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: colors.background },
+                animation: "fade",
+              }}>
+                <Stack.Screen name="(tabs)" />
+              </Stack>
+            </AffectionProvider>
+          </MemoriesProvider>
+        </DailyUsProvider>
+      </DatesProfileProvider>
     </NotesProvider>
   );
 }
