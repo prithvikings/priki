@@ -5,6 +5,7 @@ import { NotesProvider } from "@/features/notes/NotesProvider";
 import { DailyUsProvider } from "@/features/daily-us/DailyUsProvider";
 import { MemoriesProvider } from "@/features/memories/MemoriesProvider";
 import { AffectionProvider } from "@/features/affection/AffectionProvider";
+import { DatesProfileProvider } from "@/features/dates-profile/DatesProfileProvider";
 
 export default function RootLayout() {
   return (
@@ -12,6 +13,7 @@ export default function RootLayout() {
       <DailyUsProvider>
         <MemoriesProvider>
         <AffectionProvider>
+        <DatesProfileProvider>
         <StatusBar style="dark" />
         <Stack screenOptions={{
           headerShown: false,
@@ -20,6 +22,7 @@ export default function RootLayout() {
         }}>
           <Stack.Screen name="(tabs)" />
         </Stack>
+        </DatesProfileProvider>
         </AffectionProvider>
         </MemoriesProvider>
       </DailyUsProvider>
