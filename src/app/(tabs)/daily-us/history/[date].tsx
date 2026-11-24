@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, PrikiText, ScreenContainer, SurfaceCard, SecondaryButton } from "@/components";
+import { PrikiText, ScreenContainer, SurfaceCard, SecondaryButton } from "@/components";
 import { colors, spacing } from "@/theme";
 import { mockCouple } from "@/data/mockData";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
