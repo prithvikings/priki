@@ -52,12 +52,12 @@ export function getAutomaticMilestones(startDate:string, now:Date, timeZone:stri
   const add=(id:string,title:string,date:string,description:string)=>items.push({id,title,date,description,status:date>=today?"upcoming":"completed"});
   add("days-together",`${Math.max(0,elapsed)} days together`,today,"Every day, a little more us.");
   const [sy,sm,sd]=startDate.split("-").map(Number),[ty]=today.split("-").map(Number);
-  for(let offset=-12;offset<=12;offset++){
-    const total=sm-1+offset,year=sy+Math.floor(total/12),month=((total%12)+12)%12+1;
-    if(year<sy || (year===sy&&month<sm)) continue;
+  const monthsElapsed=(ty-sy)*12+(Number(today.slice(5,7))-sm);
+  for(let monthCount=Math.max(1,monthsElapsed-2);monthCount<=monthsElapsed+12;monthCount++){
+    const total=sm-1+monthCount,year=sy+Math.floor(total/12),month=((total%12)+12)%12+1;
     const last=new Date(Date.UTC(year,month,0)).getUTCDate(),day=Math.min(sd,last);
     const key=`${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-    if(key>today && key>=startDate) add(`month-${year}-${month}`,offset===0?"One month together":`${offset} months together`,key,"Another little chapter together.");
+    if(key>=startDate) add(`month-${year}-${month}`,`${monthCount} months together`,key,"Another little chapter together.");
   }
   for(let year=sy+1;year<=ty+2;year++){
     const last=new Date(Date.UTC(year,sm,0)).getUTCDate(),day=Math.min(sd,last),key=`${year}-${String(sm).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
