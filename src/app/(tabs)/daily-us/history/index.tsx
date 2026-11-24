@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { PrikiText, ScreenContainer } from "@/components";
+import { PrikiText, ScreenContainer, SecondaryButton } from "@/components";
 import { colors, spacing } from "@/theme";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { HistoryRow } from "@/features/daily-us/components/HistoryRow";
@@ -17,6 +17,7 @@ export default function DailyUsHistoryScreen() {
         <View style={styles.back}/>
       </View>
       <View style={styles.intro}><PrikiText variant="display">Little moments, kept.</PrikiText><PrikiText variant="caption">Previous questions stay here, just as you left them.</PrikiText></View>
+      <SecondaryButton title="Back to today's question" onPress={()=>router.navigate("/(tabs)/daily-us")}/>
       <View style={styles.list}>{history.map(item=><HistoryRow key={item.dateKey} item={item} onPress={()=>router.push({pathname:"/(tabs)/daily-us/history/[date]",params:{date:item.dateKey}})}/>)}</View>
     </ScreenContainer>
   );
