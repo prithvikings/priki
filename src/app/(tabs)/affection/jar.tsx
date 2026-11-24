@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,7 +8,6 @@ import { colors, spacing } from "@/theme";
 export default function LoveJarScreen() {
  const router=useRouter(); const { reasons, pickReason, pickedReason }=useAffection(); const opacity=useRef(new Animated.Value(1)).current;
  const reveal=()=>{opacity.setValue(0);pickReason();Animated.timing(opacity,{toValue:1,duration:350,useNativeDriver:true}).start();};
- useEffect(()=>{if(!pickedReason&&reasons.length)reveal();},[]);
  return <ScreenContainer contentStyle={styles.content}><AppHeader title="Reasons I Love You" eyebrow="OUR LITTLE KEEPSAKE"/>
  <View style={styles.jar}><Ionicons name="heart-half-outline" size={44} color={colors.accent}/><PrikiText variant="caption" style={styles.jarLabel}>{reasons.length} little reasons, kept close</PrikiText></View>
  <PrikiText variant="h2" style={styles.center}>A reminder, whenever you need one.</PrikiText><PrikiText variant="caption" style={styles.sub}>Pick a reason from your shared jar. There’s no order, just a little love.</PrikiText>
