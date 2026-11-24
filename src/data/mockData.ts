@@ -54,11 +54,6 @@ export const homeMockData = {
     label: "Until We Meet",
     caption: "Counting down to our next hello.",
   },
-  dailyQuestion: {
-    prompt: "What’s one small thing your partner does that always makes you smile?",
-    currentUserAnswered: true,
-    partnerAnswered: false,
-  },
   latestLoveNote: {
     title: "A Little Reminder",
     preview: "Just a tiny note to say… I’m so lucky to have you.",
