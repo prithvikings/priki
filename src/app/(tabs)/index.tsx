@@ -108,7 +108,7 @@ export default function HomeScreen() {
 
       <Pressable
         accessibilityRole="button"
-        onPress={() => router.push("/(tabs)/dates")}
+        onPress={() => router.navigate("/dates")}
         style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
       >
         <View style={styles.countdownCopy}>
@@ -129,7 +129,7 @@ export default function HomeScreen() {
           <Ionicons name="sparkles-outline" size={17} color="#D58D9B" />
         </View>
       </Pressable>
-      {nextDate ? <Pressable onPress={() => router.push("/(tabs)/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
+      {nextDate ? <Pressable onPress={() => router.navigate("/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
         <View style={styles.sectionEyebrow}>
