@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   AppHeader,
   Avatar,
@@ -106,11 +106,11 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Pressable
-        accessibilityRole="button"
-        onPress={() => router.navigate("/dates")}
-        style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
-      >
+      <Link href="/dates" asChild>
+        <Pressable
+          accessibilityRole="button"
+          style={({ pressed }) => [styles.countdown, pressed && styles.pressed]}
+        >
         <View style={styles.countdownCopy}>
           <View style={styles.countdownIcon}><Ionicons name="calendar-outline" size={23} color={colors.accent} /></View>
           <View style={styles.countdownText}>
@@ -128,7 +128,8 @@ export default function HomeScreen() {
           <View style={styles.decorationLine} />
           <Ionicons name="sparkles-outline" size={17} color="#D58D9B" />
         </View>
-      </Pressable>
+        </Pressable>
+      </Link>
       {nextDate ? <Pressable onPress={() => router.navigate("/dates")} style={styles.nextDatePreview}><Ionicons name="heart-outline" size={16} color={colors.accent}/><PrikiText variant="caption" style={styles.nextDateText}>Coming up · {nextDate.title} · {formatDateKey(nextDate.date, settings.dateFormat)}</PrikiText></Pressable> : null}
 
       <SurfaceCard style={styles.questionCard}>
