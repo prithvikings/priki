@@ -11,9 +11,10 @@ import {
   SectionHeader,
   SurfaceCard,
 } from "@/components";
-import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
+import { homeMockData, type MoodTone } from "@/data/mockData";
 import { useDailyUs } from "@/features/daily-us/DailyUsProvider";
 import { useMemories } from "@/features/memories/MemoriesProvider";
+import { useAffection } from "@/features/affection/AffectionProvider";
 import { MemoryArtwork } from "@/features/memories/components/MemoryArtwork";
 import { colors, radius, shadows, spacing } from "@/theme";
 
@@ -23,12 +24,6 @@ const moodColors: Record<MoodTone, string> = {
   tired: "#A99AB8",
   loved: colors.primary,
 };
-
-const affectionItems: { kind: AffectionKind; icon: keyof typeof Ionicons.glyphMap; label: string }[] = [
-  { kind: "Hug", icon: "heart-circle-outline", label: "Hug" },
-  { kind: "Kiss", icon: "heart-outline", label: "Kiss" },
-  { kind: "Thinking of You", icon: "paper-plane-outline", label: "Thinking of you" },
-];
 
 function daysUntil(date: string) {
   const [year, month, day] = date.split("-").map(Number);
@@ -88,15 +83,11 @@ export default function HomeScreen() {
   const router = useRouter();
   const { currentEntry } = useDailyUs();
   const { memories } = useMemories();
+  const { reasons } = useAffection();
   const latestMemory = [...memories].sort((a, b) => b.memoryDate.localeCompare(a.memoryDate) || b.createdAt.localeCompare(a.createdAt))[0];
-  const [sentAffections, setSentAffections] = useState<AffectionKind[]>([]);
-  const [hugCount, setHugCount] = useState(0);
   const days = useMemo(() => daysUntil(homeMockData.meeting.date), []);
 
-  const sendAffection = (kind: AffectionKind) => {
-    setSentAffections((current) => [...current, kind]);
-    if (kind === "Hug") setHugCount((count) => count + 1);
-  };
+
 
   const navigateTo = (route: "/(tabs)/notes" | "/(tabs)/daily-us" | "/(tabs)/memories" | "/(tabs)/affection") => {
     router.navigate(route);
@@ -166,10 +157,9 @@ export default function HomeScreen() {
         <SectionHeader title="Little things, right now" />
         <View style={styles.quickGrid}>
           <ActionTile icon="mail-outline" title="Love Notes" onPress={() => navigateTo("/(tabs)/notes")} />
-          <ActionTile icon="heart-outline" title={hugCount > 0 ? `Send a Hug · ${hugCount}` : "Send a Hug"} onPress={() => sendAffection("Hug")} accent />
-          <ActionTile icon="gift-outline" title={`Our Jar · ${homeMockData.loveJar.reasonCount}`} onPress={() => navigateTo("/(tabs)/affection")} />
+          <ActionTile icon="heart-outline" title="Little Affections" onPress={() => navigateTo("/(tabs)/affection")} accent />
+          <ActionTile icon="gift-outline" title={`Reasons · ${reasons.length}`} onPress={() => router.push("/(tabs)/affection/jar")} />
         </View>
-        {hugCount > 0 ? <PrikiText variant="caption" style={styles.inlineFeedback}>A little hug added to your local activity.</PrikiText> : null}
       </View>
 
       <SurfaceCard style={styles.memoryCard} padded={false}>
@@ -186,33 +176,6 @@ export default function HomeScreen() {
         </Pressable>
       </SurfaceCard>
 
-      <View style={styles.affectionSection}>
-        <SectionHeader title="A little affection" />
-        <View style={styles.affectionRow}>
-          {affectionItems.map((item) => {
-            const selected = sentAffections[sentAffections.length - 1] === item.kind;
-            return (
-              <Pressable
-                key={item.kind}
-                accessibilityRole="button"
-                accessibilityState={{ selected }}
-                onPress={() => sendAffection(item.kind)}
-                style={({ pressed }) => [styles.affectionButton, selected && styles.affectionSelected, pressed && styles.pressed]}
-              >
-                <Ionicons name={item.icon} size={22} color={selected ? colors.accent : colors.textSecondary} />
-                <PrikiText variant="caption" style={[styles.affectionLabel, selected && styles.affectionLabelSelected]}>{item.label}</PrikiText>
-              </Pressable>
-            );
-          })}
-        </View>
-        {sentAffections.length > 0 ? (
-          <PrikiText variant="caption" style={styles.inlineFeedback}>
-            {sentAffections[sentAffections.length - 1] === "Thinking of You"
-              ? "Thinking of you — saved as a local preview."
-              : `Your ${sentAffections[sentAffections.length - 1].toLowerCase()} is shown as a local preview.`}
-          </PrikiText>
-        ) : null}
-      </View>
       <PrikiText variant="caption" style={styles.footer}>MADE FOR TWO, ALWAYS.</PrikiText>
     </ScreenContainer>
   );
@@ -258,12 +221,6 @@ const styles = StyleSheet.create({
   memoryImage: { width: 116, height: 116, borderRadius: radius.md, backgroundColor: colors.surfaceMuted },
   memoryCopy: { flex: 1, gap: spacing.xs },
   memoryCaption: { fontSize: 12, lineHeight: 17 },
-  affectionSection: { gap: spacing.sm },
-  affectionRow: { flexDirection: "row", gap: spacing.sm },
-  affectionButton: { flex: 1, minHeight: 68, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5, paddingHorizontal: 4 },
-  affectionSelected: { backgroundColor: "#FBE8EB", borderColor: colors.primary },
-  affectionLabel: { color: colors.textSecondary, fontSize: 10, lineHeight: 14 },
-  affectionLabelSelected: { color: colors.accent, fontWeight: "600" },
   inlineFeedback: { color: colors.accent, marginTop: spacing.xs },
   footer: { textAlign: "center", letterSpacing: 1.1, fontSize: 10, marginTop: spacing.xs },
   memoryDate: { color: colors.accent, fontWeight: "600" },
