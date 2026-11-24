@@ -1,7 +1,8 @@
+import { mockCouple } from "@/data/mockData";
 import { questionBank } from "./questionBank";
 import type { DailyQuestion } from "./types";
 
-export const SHARED_COUPLE_TIMEZONE = "Asia/Kolkata";
+export const SHARED_COUPLE_TIMEZONE = mockCouple.relationship.timezone;
 export const DEMO_COUPLE_ID = "priki-demo-couple";
 
 export function getCoupleDateKey(now: Date = new Date(), timeZone = SHARED_COUPLE_TIMEZONE) {
