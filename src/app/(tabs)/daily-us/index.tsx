@@ -100,8 +100,12 @@ export default function DailyUsScreen() {
 
       {currentEntry.bothSubmitted ? (
         <Animated.View style={[styles.revealSection,{opacity:revealOpacity,transform:[{translateY:revealOpacity.interpolate({inputRange:[0,1],outputRange:[12,0]})}]}]}>
-          <View style={styles.revealHeading}><Ionicons name="heart" size={18} color={colors.accent}/><PrikiText variant="h3">A little more of each other</PrikiText></View>
+          <View style={styles.revealTop}>
+            <View style={styles.revealHeading}><Ionicons name="heart" size={18} color={colors.accent}/><PrikiText variant="h3">A little more of each other</PrikiText></View>
+            <Pressable accessibilityRole="button" onPress={()=>setEditing(true)}><PrikiText variant="caption" style={styles.editLink}>Edit yours</PrikiText></Pressable>
+          </View>
           <PrikiText variant="caption">You both showed up. Here are your two perspectives.</PrikiText>
+          {editing ? <View style={styles.editComposer}><AnswerComposer key="revealed-edit" initialValue={currentEntry.currentUserAnswer ?? ""} submitLabel="Save changes" onSubmit={handleSubmit}/><SecondaryButton title="Cancel editing" onPress={()=>setEditing(false)}/></View> : null}
           <AnswerCard name={mockCouple.currentUser.name} initials={mockCouple.currentUser.initials} answer={currentEntry.currentUserAnswer ?? ""} isCurrentUser partnerReacted={currentEntry.partnerReactedToCurrentUser}/>
           <AnswerCard name={mockCouple.partner.name} initials={mockCouple.partner.initials} answer={currentEntry.partnerAnswer ?? ""} isCurrentUser={false} reacted={currentEntry.currentUserReactedToPartner} onReact={togglePartnerAnswerReaction}/>
         </Animated.View>
@@ -150,7 +154,10 @@ const styles=StyleSheet.create({
  skippedIcon:{width:48,height:48,borderRadius:24,backgroundColor:colors.surfaceMuted,alignItems:"center",justifyContent:"center"},
  skippedCopy:{textAlign:"center"},
  revealSection:{gap:spacing.md},
+ revealTop:{flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:spacing.sm},
  revealHeading:{flexDirection:"row",alignItems:"center",gap:spacing.sm},
+ editLink:{color:colors.accent,fontWeight:"600"},
+ editComposer:{gap:spacing.sm},
  savedToast:{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:spacing.xs},
  savedToastText:{color:colors.success},
  devPanel:{padding:spacing.md,borderRadius:radius.md,borderWidth:1,borderStyle:"dashed",borderColor:colors.borderStrong,gap:spacing.sm,backgroundColor:colors.surfaceMuted},
