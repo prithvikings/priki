@@ -9,11 +9,10 @@ import {
   PrimaryButton,
   ScreenContainer,
   SectionHeader,
-  SecondaryButton,
   SurfaceCard,
 } from "@/components";
 import { homeMockData, type AffectionKind, type MoodTone } from "@/data/mockData";
-import { colors, radius, shadows, spacing, typography } from "@/theme";
+import { colors, radius, shadows, spacing } from "@/theme";
 
 const moodColors: Record<MoodTone, string> = {
   happy: "#E8B76F",
@@ -86,6 +85,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const [sentAffections, setSentAffections] = useState<AffectionKind[]>([]);
   const [hugCount, setHugCount] = useState(0);
+  const [memoryImageFailed, setMemoryImageFailed] = useState(false);
   const days = useMemo(() => daysUntil(homeMockData.meeting.date), []);
 
   const sendAffection = (kind: AffectionKind) => {
@@ -172,12 +172,17 @@ export default function HomeScreen() {
           <SectionHeader title="Recent Memory" actionLabel="View all" onActionPress={() => navigateTo("/(tabs)/memories")} />
         </View>
         <Pressable onPress={() => navigateTo("/(tabs)/memories")} style={({ pressed }) => [styles.memoryContent, pressed && styles.pressed]}>
-          <Image
-            source={{ uri: homeMockData.recentMemory.imageUri ?? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" }}
-            style={styles.memoryImage}
-            resizeMode="cover"
-            accessibilityLabel="Warm sunset sky over a landscape"
-          />
+          {memoryImageFailed ? (
+            <View style={[styles.memoryImage, styles.memoryFallback]}><Ionicons name="image-outline" size={30} color={colors.accent} /></View>
+          ) : (
+            <Image
+              source={{ uri: homeMockData.recentMemory.imageUri ?? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900&q=85" }}
+              style={styles.memoryImage}
+              resizeMode="cover"
+              onError={() => setMemoryImageFailed(true)}
+              accessibilityLabel="Warm sunset sky over a landscape"
+            />
+          )}
           <View style={styles.memoryCopy}>
             <PrikiText variant="title">{homeMockData.recentMemory.title}</PrikiText>
             <PrikiText variant="caption" style={styles.memoryCaption}>{homeMockData.recentMemory.caption}</PrikiText>
@@ -268,5 +273,6 @@ const styles = StyleSheet.create({
   inlineFeedback: { color: colors.accent, marginTop: spacing.xs },
   footer: { textAlign: "center", letterSpacing: 1.1, fontSize: 10, marginTop: spacing.xs },
   memoryDate: { color: colors.accent, fontWeight: "600" },
+  memoryFallback: { alignItems: "center", justifyContent: "center" },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
 });
