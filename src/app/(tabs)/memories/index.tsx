@@ -20,7 +20,7 @@ export default function MemoriesScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader title="Our Memories" eyebrow="THE MOMENTS YOU KEEP" />
+      <AppHeader title="Our Memories" eyebrow="" />
       <View style={styles.intro}>
         <PrikiText variant="display">Little moments,</PrikiText>
         <PrikiText variant="display" style={styles.accent}>kept close.</PrikiText>

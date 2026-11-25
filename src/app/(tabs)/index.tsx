@@ -93,7 +93,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader onProfilePress={() => router.push("/(tabs)/profile")} />
+      <AppHeader eyebrow="" onProfilePress={() => router.push("/(tabs)/profile")} />
 
       <View style={styles.greeting}>
         <PrikiText variant="display">A little closer,</PrikiText>

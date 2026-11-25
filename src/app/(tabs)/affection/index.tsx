@@ -16,7 +16,7 @@ export default function AffectionScreen() {
     Animated.sequence([Animated.timing(pulse, { toValue: 1.08, duration: 160, useNativeDriver: true }), Animated.spring(pulse, { toValue: 1, useNativeDriver: true })]).start();
   };
   return <ScreenContainer contentStyle={styles.content}>
-    <AppHeader title="Little Affections" eyebrow="A LITTLE EXTRA LOVE" />
+    <AppHeader title="Little Affections" eyebrow="" />
     <View style={styles.intro}><PrikiText variant="display">Little ways to say</PrikiText><PrikiText variant="display" style={styles.accent}>I’m thinking of you.</PrikiText><PrikiText variant="caption" style={styles.sub}>Small gestures, even from miles away.</PrikiText></View>
     <SurfaceCard style={styles.sendCard}>
       <PrikiText variant="title">Send a little affection</PrikiText><PrikiText variant="caption" style={styles.muted}>Choose a tiny reminder that they’re on your mind.</PrikiText>
