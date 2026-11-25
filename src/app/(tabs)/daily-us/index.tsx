@@ -37,7 +37,7 @@ export default function DailyUsScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader title="Priki" eyebrow="" />
+      <AppHeader title="" eyebrow="" />
       <View style={styles.intro}>
         <PrikiText variant="display" style={styles.heading}>Daily Us</PrikiText>
         <PrikiText variant="body" style={styles.subtitle}>One little moment to connect, every day.</PrikiText>

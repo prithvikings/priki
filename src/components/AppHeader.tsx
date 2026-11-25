@@ -7,14 +7,14 @@ import { PrikiText } from "./PrikiText";
 
 type Props = { title?: string; eyebrow?: string; onProfilePress?: () => void };
 
-export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY DAY.", onProfilePress }: Props) {
+export function AppHeader({ title, eyebrow = "A LITTLE CLOSER, EVERY DAY.", onProfilePress }: Props) {
   const router = useRouter();
   return (
     <View style={styles.row}>
-      <View style={styles.copy}>
+      {eyebrow || title ? <View style={styles.copy}>
         {eyebrow ? <PrikiText variant="overline" style={styles.eyebrow}>{eyebrow}</PrikiText> : null}
-        <PrikiText variant="h2" style={styles.title}>{title}</PrikiText>
-      </View>
+        {title ? <PrikiText variant="h2" style={styles.title}>{title}</PrikiText> : null}
+      </View> : null}
       <View style={styles.actions}>
         <View accessibilityLabel="Notifications" style={styles.notification}>
           <Ionicons name="notifications-outline" size={23} color={colors.text} />
@@ -29,7 +29,7 @@ export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY D
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing["2xl"] },
+  row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.sm },
   copy: { gap: spacing.xs },
   actions: { flexDirection: "row", alignItems: "center", gap: spacing.lg },
   notification: { width: 38, height: 38, alignItems: "center", justifyContent: "center" },

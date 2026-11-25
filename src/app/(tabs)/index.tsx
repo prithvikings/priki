@@ -93,7 +93,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader eyebrow="" onProfilePress={() => router.push("/(tabs)/profile")} />
+      <AppHeader title="" eyebrow="" onProfilePress={() => router.push("/(tabs)/profile")} />
 
       <View style={styles.greeting}>
         <PrikiText variant="display">A little closer,</PrikiText>
@@ -178,7 +178,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   content: { paddingTop: spacing.md, paddingBottom: spacing["3xl"], gap: spacing.xl },
-  greeting: { gap: 0, marginTop: spacing.xs },
+  greeting: { gap: 0, marginTop: 0 },
   greetingSecond: { color: colors.accent, fontSize: 29 },
   greetingCaption: { marginTop: spacing.sm, fontSize: 14 },
   coupleRow: { flexDirection: "row", justifyContent: "center", alignItems: "center", gap: spacing["5xl"], position: "relative", paddingVertical: spacing.sm },
