@@ -12,7 +12,7 @@ export function AppHeader({ title = "Priki", eyebrow = "A LITTLE CLOSER, EVERY D
   return (
     <View style={styles.row}>
       <View style={styles.copy}>
-        <PrikiText variant="overline" style={styles.eyebrow}>{eyebrow}</PrikiText>
+        {eyebrow ? <PrikiText variant="overline" style={styles.eyebrow}>{eyebrow}</PrikiText> : null}
         <PrikiText variant="h2" style={styles.title}>{title}</PrikiText>
       </View>
       <View style={styles.actions}>
