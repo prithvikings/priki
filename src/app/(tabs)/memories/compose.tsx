@@ -9,7 +9,7 @@ export default function ComposeMemoryScreen() {
   const { createMemory } = useMemories();
   return (
     <ScreenContainer contentStyle={{ paddingTop: spacing.md, paddingBottom: 120, gap: spacing.lg }}>
-      <AppHeader title="A new memory" eyebrow="SAVE THIS MOMENT" />
+      <AppHeader title="A new memory" />
       <PrikiText variant="caption">Some moments deserve a page of their own.</PrikiText>
       <MemoryForm submitLabel="Save memory" onCancel={() => router.back()} onSave={input => { createMemory(input); router.replace("/(tabs)/memories"); }} />
     </ScreenContainer>

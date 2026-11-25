@@ -23,7 +23,7 @@ export default function MemoryDetailScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader title="A moment together" eyebrow="FROM YOUR SCRAPBOOK" />
+      <AppHeader title="" />
       <MemoryArtwork imageRef={memory.imageRef} style={styles.art} />
       <PrikiText variant="display">{memory.title}</PrikiText>
       <View style={styles.meta}><Ionicons name="calendar-outline" size={17} color={colors.accent} /><PrikiText variant="caption" style={styles.date}>{formatMemoryDate(memory.memoryDate)}</PrikiText></View>

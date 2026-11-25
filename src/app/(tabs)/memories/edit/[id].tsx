@@ -13,7 +13,7 @@ export default function EditMemoryScreen() {
   if (!memory || memory.creator.id !== mockCouple.currentUser.id) return <ScreenContainer contentStyle={{ paddingTop: spacing.md, gap: spacing.lg }}><AppHeader title="Can't edit this memory" /><PrikiText variant="body">Only the person who added a memory can edit it.</PrikiText><SecondaryButton title="Back to memory" onPress={() => router.back()} /></ScreenContainer>;
   return (
     <ScreenContainer contentStyle={{ paddingTop: spacing.md, paddingBottom: 120, gap: spacing.lg }}>
-      <AppHeader title="Edit memory" eyebrow="MAKE A LITTLE CHANGE" />
+      <AppHeader title="Edit memory" />
       <MemoryForm initialValue={{ title: memory.title, description: memory.description, memoryDate: memory.memoryDate, imageRef: memory.imageRef }} submitLabel="Save changes" onCancel={() => router.back()} onSave={input => { updateMemory(memory.id, input); router.replace({ pathname: "/(tabs)/memories/[id]", params: { id: memory.id } }); }} />
     </ScreenContainer>
   );
