@@ -14,7 +14,7 @@ export function AppHeader({ title, eyebrow = "A LITTLE CLOSER, EVERY DAY.", onPr
       {eyebrow || title ? <View style={styles.copy}>
         {eyebrow ? <PrikiText variant="overline" style={styles.eyebrow}>{eyebrow}</PrikiText> : null}
         {title ? <PrikiText variant="h2" style={styles.title}>{title}</PrikiText> : null}
-      </View> : null}
+      </View> : <View style={styles.spacer} />}
       <View style={styles.actions}>
         <View accessibilityLabel="Notifications" style={styles.notification}>
           <Ionicons name="notifications-outline" size={23} color={colors.text} />
@@ -31,6 +31,7 @@ export function AppHeader({ title, eyebrow = "A LITTLE CLOSER, EVERY DAY.", onPr
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.sm },
   copy: { gap: spacing.xs },
+  spacer: { flex: 1 },
   actions: { flexDirection: "row", alignItems: "center", gap: spacing.lg },
   notification: { width: 38, height: 38, alignItems: "center", justifyContent: "center" },
   notificationDot: { position: "absolute", top: 4, right: 5, width: 8, height: 8, borderRadius: 4, backgroundColor: colors.primary, borderWidth: 1, borderColor: colors.background },
