@@ -29,7 +29,7 @@ export default function NotesInboxScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader title="Love Notes" eyebrow="" />
+      <AppHeader title="" eyebrow="" />
       <View style={styles.heading}>
         <View style={styles.headingText}>
           <PrikiText variant="display" style={styles.title}>Love Notes</PrikiText>

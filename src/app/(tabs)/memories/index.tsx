@@ -20,7 +20,7 @@ export default function MemoriesScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <AppHeader title="Our Memories" eyebrow="" />
+      <AppHeader title="" eyebrow="" />
       <View style={styles.intro}>
         <PrikiText variant="display">Little moments,</PrikiText>
         <PrikiText variant="display" style={styles.accent}>kept close.</PrikiText>
@@ -44,7 +44,7 @@ export default function MemoriesScreen() {
 }
 const styles = StyleSheet.create({
   content: { paddingTop: spacing.md, paddingBottom: 132, gap: spacing.lg },
-  intro: { gap: 0, marginTop: spacing.xs, marginBottom: spacing.xs },
+  intro: { gap: 0, marginTop: 0, marginBottom: spacing.xs },
   accent: { color: colors.accent },
   subtitle: { color: colors.textSecondary, marginTop: spacing.sm, lineHeight: 20 },
   group: { gap: spacing.md },
